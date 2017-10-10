@@ -28,3 +28,9 @@ Team B
   - This could, however, potentially lead to ants at the front of the "queue" accidentally catching the trail left by rearmost ants, pulling the entire cluster into an Ouroboros-like spiral that will be difficult, if not impossible to escape.
 
 [Control Variables for Testing and Evaluation]
+- Repellent intensity
+- Pheromone intensity
+- Ant stress? (To determine possible point of pheromone secretion?)
+- Ant reaction speed?
+- Box size?
+- Exit width
