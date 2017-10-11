@@ -1,24 +1,34 @@
 [Team]
-Team B
-- P4048819 - Daniel Boden
-- P4261930 - Dean Duff
-- P4048801 - Jo Humphreys
+- Team B
+  - P4048819 - Daniel Boden
+  - P4261930 - Dean Duff
+  - P4048801 - Jo Humphreys
 
 [Title]
+Simulated ant behaviour in an escape situation and observed evacuation dynamics
 
 [Brief]
+Ants are often used in experiments to observe behaviour patterns in a variety of crowd-based situations, the results of which can be subsequently compared to the behaviours of other species such as humans. In a 2015 paper, three researchers conducted experiments to observe the behaviour of ants in a situation in which they were forced to escape from a single-exit room, and timing their collective escape while also noting some behaviour that emerged in the process of seeking an exit and subsequently leading the other ants in the room out.
 
 [Hypothesis]
+pffff don’t know….. ‘Does similar group formations/behaviour arise in ants under a multitude of different scenarios?’ meh…need something better that makes more sense.
 
 [Primary References]
-- Wang, S., Lv, W., & Song, W. (2015). Behavior of Ants Escaping from a Single-Exit Room. PLoS ONE, 10(6), e0131784. http://doi.org/10.1371/journal.pone.0131784
-- Schneirla, T.C. (1944), A unique case of circular milling in ants, considered in relation to trail following and the general problem of orientation. American Museum novitates ; no. 1253. http://digitallibrary.amnh.org/handle/2246/3733
+- Main Papers
+  - Wang, S., Lv, W., & Song, W. (2015). Behavior of Ants Escaping from a Single-Exit Room. PLoS ONE, 10(6), e0131784. http://doi.org/10.1371/journal.pone.0131784
+  - Schneirla, T.C. (1944), A unique case of circular milling in ants, considered in relation to trail following and the general problem of orientation. American Museum novitates ; no. 1253. http://digitallibrary.amnh.org/handle/2246/3733
+
+- Other Papers
+  - R. Beckers , J. L. Deneubourg , S. Goss. (1993).  Modulation of trail laying in the ant Lasius niger (Hymenoptera: Formicidae) and its role in the collective selection of a food source. http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.161.9541
+  - R. Beckers , J. L. Deneubourg , S. Goss. (1992). Trails and u-turns in the selection of a path by the ant Lasius Niger. http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.162.378
+  - Dirk Helbing , Péter Molnár. (1995). Social force model for pedestrian dynamics. http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.242.7078
 
 [Anticipated Behaviours]
 - Ants retreat from repellent and attempt to seek an exit
 - Ants are blind - they can't see, but they can sense through other means.
+  - For the most part, movement will initially be somewhat "random" with the exception of attempting to get away from the repellent.
 - Ants emit pheromones (involuntarily?) that are picked up by other ants and can serve to guide them.
-  - Potential for emergent behaviour: Ants may form something resembling an orderly queue as a result of those pheromones
+  - Potential for emergent behaviour: Ants may form something resembling an orderly queue as a result of following those pheromones
   - Potential for emergent behaviour: Ants may accidentally lead themselves into a perpetual spiral
     - Potential for emergent behaviour: ...which they might also potentially escape.
 
@@ -28,9 +38,10 @@ Team B
   - This could, however, potentially lead to ants at the front of the "queue" accidentally catching the trail left by rearmost ants, pulling the entire cluster into an Ouroboros-like spiral that will be difficult, if not impossible to escape.
 
 [Control Variables for Testing and Evaluation]
-- Repellent intensity
-- Pheromone intensity
+- Repellent intensity and decay rate
+- Pheromone intensity and decay rate
+- Ant count
 - Ant stress? (To determine possible point of pheromone secretion?)
-- Ant reaction speed?
-- Box size?
-- Exit width
+- Ant movement speed
+- Box size
+- Exit count and width
