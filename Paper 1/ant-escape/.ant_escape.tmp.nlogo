@@ -7,12 +7,13 @@ to setup
   reset-ticks
   set mouse-up? true
 
-  ask patches [set pcolor [120 120 120]]
+  ask patches [set pcolor [0 0 255]]
   render-box
 end
 
 to go
   mouse-click?
+  spread-repellent
   tick
 end
 
@@ -22,24 +23,31 @@ to mouse-click?
       if mouse-down? [
         set mouse-up? false
         ask patch (round mouse-xcor) (round mouse-ycor)
-        [
-          drop-repellent
-        ]
+        [ drop-repellent ]
       ]
     ]
-    [if not mouse-down? [
-      set mouse-up? true
-      ]
-    ]
+    [ if not mouse-down? [ set mouse-up? true ] ]
   ]
 end
 
 to drop-repellent
-  if pcolor != black [
-    let patch-colour extract-rgb pcolor
-    set patch-colour replace-item 0 repellent-intensity
+  if pcolor != [0 0 0] [
+    set pcolor replace-item 0 pcolor repellent-intensity
+  ]
+end
 
-    set pcolor
+to spread-repellent
+  ask patches [
+    if (item 0 pcolor) > 0 [
+      ask neighbors4 [
+        if pcolor != [0 0 0] [
+          let new-color (item 0 pcolor) + repellent-transfer
+          if new-color > 255 [ set new-color 255 ]
+
+          set pcolor replace-item 0 pcolor new-color
+        ]
+      ]
+    ]
   ]
 end
 @#$#@#$#@
@@ -190,7 +198,22 @@ repellent-transfer
 repellent-transfer
 0
 255
-50.0
+1.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+225
+745
+745
+778
+repellent-decay
+repellent-decay
+0
+255
+25.0
 1
 1
 NIL

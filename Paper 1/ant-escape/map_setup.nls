@@ -19,8 +19,8 @@ to render-horizontal-walls [x1 x2 y1 y2]
   let x x1
 
   while [x <= x2] [
-    ask patch x y1 [ set pcolor black ]
-    ask patch x y2 [ set pcolor black ]
+    ask patch x y1 [ set pcolor [0 0 0] ]
+    ask patch x y2 [ set pcolor [0 0 0] ]
     set x x + 1
   ]
 end
@@ -30,8 +30,8 @@ to render-vertical-walls [x1 x2 y1 y2]
   let y y1
 
   while [y <= y2] [
-    ask patch x1 y [ set pcolor black ]
-    ask patch x2 y [ set pcolor black ]
+    ask patch x1 y [ set pcolor [0 0 0] ]
+    ask patch x2 y [ set pcolor [0 0 0] ]
     set y y + 1
   ]
 end
@@ -44,7 +44,7 @@ to open-exit [y]
   let x x1
 
   while [x <= x2] [
-    ask patch x y [set pcolor [120 120 120]]
+    ask patch x y [set pcolor [0 0 255]]
 
     set x x + 1
   ]
