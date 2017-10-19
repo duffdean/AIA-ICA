@@ -23,15 +23,23 @@ to mouse-click?
         set mouse-up? false
         ask patch (round mouse-xcor) (round mouse-ycor)
         [
-          if pcolor !
-          set pcolor [255 120 120]
+          drop-repellent
         ]
       ]
     ]
     [if not mouse-down? [
-        set mouse-up? true
+      set mouse-up? true
       ]
     ]
+  ]
+end
+
+to drop-repellent
+  if pcolor != black [
+    let patch-colour extract-rgb pcolor
+    set patch-colour replace-item 0 repellent-intensity
+
+    set pcolor
   ]
 end
 @#$#@#$#@
@@ -157,6 +165,36 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+225
+675
+745
+708
+repellent-intensity
+repellent-intensity
+0
+255
+255.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+225
+710
+745
+743
+repellent-transfer
+repellent-transfer
+0
+255
+50.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
