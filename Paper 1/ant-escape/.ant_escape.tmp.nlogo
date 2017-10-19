@@ -23,7 +23,8 @@ to mouse-click?
         set mouse-up? false
         ask patch (round mouse-xcor) (round mouse-ycor)
         [
-          if pcolor != black [ set pcolor [255 120 120] ]
+          if pcolor !
+          set pcolor [255 120 120]
         ]
       ]
     ]
