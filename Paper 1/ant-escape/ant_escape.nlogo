@@ -39,16 +39,28 @@ end
 to spread-repellent
   ask patches [
     if (item 0 pcolor) > 0 [
-      ask neighbors4 [
-        if pcolor != [0 0 0] [
-          let new-color (item 0 pcolor) + repellent-transfer
-          if new-color > 255 [ set new-color 255 ]
-
-          set pcolor replace-item 0 pcolor new-color
-        ]
-      ]
+      distribute-repellent
+      decay-repellent
     ]
   ]
+end
+
+to distribute-repellent
+  ask neighbors4 [
+    if pcolor != [0 0 0] [
+      let new-color (item 0 pcolor) + repellent-transfer
+      if new-color > 255 [ set new-color 255 ]
+
+      set pcolor replace-item 0 pcolor new-color
+    ]
+  ]
+end
+
+to decay-repellent
+  let new-color (item 0 pcolor) - repellent-decay
+  if new-color < 0 [ set new-color 0 ]
+
+  set pcolor replace-item 0 pcolor new-color
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -213,7 +225,7 @@ repellent-decay
 repellent-decay
 0
 255
-40.0
+0.0
 1
 1
 NIL
