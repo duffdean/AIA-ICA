@@ -49,7 +49,7 @@ to distribute-repellent [source-color]
   ask neighbors4 [
     if pcolor != [0 0 0] [
       let new-color (item 0 pcolor)
-      set new-color new-color + (source-color * (repellent-transfer / 100))
+      set new-color new-color + (necolor * (repellent-transfer / 100))
       if new-color > 255 [ set new-color 255 ]
 
       set pcolor replace-item 0 pcolor new-color
