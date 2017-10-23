@@ -1,19 +1,27 @@
-__includes ["map_setup.nls"]
+__includes ["map_setup.nls" "ant_setup.nls"]
 
 globals [ mouse-up? ]
 
+
 ; Initialise the model!
 to setup
+  clear-all ;;dean - added this to reset num of ants to 0
   reset-ticks
+
   set mouse-up? true
 
   ask patches [set pcolor [0 0 255]]
   render-box
+  breed-ants
 end
 
 to go
   mouse-click?
   spread-repellent
+
+  ants-go
+
+  ;release-pheromone ;;Attempt at pheromones using patches. Will probably discard
   tick
 end
 
@@ -118,7 +126,7 @@ box-width
 box-width
 10
 56
-56.0
+55.0
 1
 1
 patches
@@ -165,7 +173,7 @@ exit-width
 exit-width
 1
 10
-1.0
+6.0
 1
 1
 NIL
@@ -197,7 +205,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-255.0
+253.0
 1
 1
 NIL
@@ -231,6 +239,21 @@ repellent-decay
 1
 1
 %
+HORIZONTAL
+
+SLIDER
+10
+55
+120
+88
+ant-population
+ant-population
+0
+500
+28.0
+1
+1
+NIL
 HORIZONTAL
 
 @#$#@#$#@
@@ -338,6 +361,16 @@ Circle -16777216 true false 30 180 90
 Polygon -16777216 true false 162 80 132 78 134 135 209 135 194 105 189 96 180 89
 Circle -7500403 true true 47 195 58
 Circle -7500403 true true 195 195 58
+
+checkerpiece2
+false
+0
+Circle -7500403 true true 60 60 180
+Circle -16777216 false false 60 60 180
+Circle -7500403 true true 75 45 180
+Circle -16777216 false false 83 36 180
+Circle -7500403 true true 105 15 180
+Circle -16777216 false false 105 15 180
 
 circle
 false

@@ -1,0 +1,79 @@
+breed [ants ant]
+breed [pheromones pher]
+
+;;ants-own [ph-trail]
+
+patches-own
+[
+  pheromone
+]
+
+to breed-ants
+  create-ants ant-population
+end
+
+to move-ants
+  avoid-wall
+  wiggle
+  fd 1 
+end
+
+to ants-go
+  ask pheromones 
+  [
+    set color color - 1    
+    if color mod 30 < 1  [ die ]
+    set shape "dot" 
+  ]
+  
+  ask ants
+  [
+     move-ants
+     avoid-wall
+     hatch-pheromones 1
+     set shape "ant"
+     set size 3
+     ;setxy 31 31
+     ;setxy random-xcor random-ycor  ;seem to be having problem with setting where ants spawn. They just seem to get stuck in circle
+     ;setxy (random 0 + 63) (random 63 + 0) 
+  ]
+end
+
+to wiggle  ;; code behind the wiggle procedure, use this on its own, or import simons complete lib???
+  rt random 40
+  lt random 40
+  if not can-move? 1 [ rt 180 ]  
+end
+
+to avoid-wall
+  while    
+  [ 
+     any? patches in-radius 1 with 
+     [ 
+        pcolor = [0 0 0]
+     ] 
+  ] 
+  
+  [
+     bk .5
+     rt (random 180) - 90
+     fd .5
+  ]
+end
+
+to release-pheromone
+  diffuse pheromone (50 / 100)
+  ask patches
+  [ set pheromone pheromone * (100 - 10) / 100
+    recolour-patch ]
+end
+
+to show-trail  
+  ;set pcolor blue 
+  ;set pcolor scale-color green pheromone 0.1 5 
+end
+
+to recolour-patch
+  set pcolor [88 88 88]  
+  ;;set pcolor scale-color green pheromone 0.1 5 
+end
