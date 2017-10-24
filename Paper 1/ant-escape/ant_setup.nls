@@ -54,24 +54,27 @@ to ants-go
     move-ants
     avoid-wall
     
-    if (item 0 pcolor) > 0  ;Release pheromones if repellent detected. Need to expand on this to look at intensity etc.
-    [
-       hatch-pheromones 1   ;Current way of pheromone trail, but dont think its the right way.
-    ]
+    ;activate-pheromone
    
     
     set shape "ant"
     set size 3    
-    set pheromone [0 0 0]
+    ;set pheromone [0 0 0]
+    
+    release-pheromone2 (item 1 pheromone)
+    
+    
     ;let id (identity - 1)
     ;let my-pheromone (item 1 pheromone)
   ]
   
   ask patches
   [
-    set pheromone [0 50 0]
+    set pheromone [0 0 0]
+    
+    release-pheromone2 (item 1 pheromone)
+    
   ]
-  
   ;diffuse pheromone (20 / 100) ;set 20 to be a slider var ;Issue with diffuse also as diffuse needs to be an int, not a list...
   
   display
@@ -114,6 +117,31 @@ to avoid-wall
   ]
 end
 
+to activate-pheromone
+  if (item 0 pcolor) > 0  ;Release pheromones if repellent detected. Need to expand on this to look at intensity etc.
+    [
+       hatch-pheromones 1   ;Current way of pheromone trail, but dont think its the right way.
+    ]
+end
+
+
+to release-pheromone2 [source-color]
+  
+  let new-color (item 1 pheromone)
+  set new-color new-color + (source-color + 50)
+  if new-color > 255 [ set new-color 255 ]
+
+  set pheromone replace-item 1 pheromone new-color
+  ;user-message pheromone
+  ;set pheromone replace-item 1 pheromone new-color
+  ;set pheromone replace-item 1 pheromone  (1 * (100 - 25) / 100)    
+end
+
+to display-pheromone [source-color]
+  let new-color (item 1 pcolor)
+  set pcolor replace-item 0 pcolor new-color
+end
+
 to release-pheromone
   diffuse pheromone (50 / 100)
   ask patches
@@ -127,6 +155,7 @@ to show-trail
   ;set pcolor blue 
   ;set pcolor scale-color green pheromone 0.1 5 
 end
+
 
 to recolour-patch
   set pcolor [88 88 88]  
