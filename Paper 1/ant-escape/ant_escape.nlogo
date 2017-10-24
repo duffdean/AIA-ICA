@@ -1,4 +1,4 @@
-__includes ["map_setup.nls" "ant_setup.nls"]
+__includes ["map_setup.nls" "ant_setup.nls" "utils.nls"]
 
 globals [ mouse-up? ]
 
@@ -11,17 +11,15 @@ to setup
   set mouse-up? true
 
   ask patches [set pcolor [0 0 255]]
+
   render-box
-  breed-ants
+  setup-ants
 end
 
 to go
+  ants-go
   mouse-click?
   spread-repellent
-
-  ants-go
-
-  ;release-pheromone ;;Attempt at pheromones using patches. Will probably discard
   tick
 end
 
@@ -250,7 +248,7 @@ ant-population
 ant-population
 0
 500
-28.0
+10.0
 1
 1
 NIL
@@ -621,7 +619,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.2
+NetLogo 6.0.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
