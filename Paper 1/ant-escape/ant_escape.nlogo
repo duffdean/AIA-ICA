@@ -124,7 +124,7 @@ box-width
 box-width
 10
 56
-55.0
+56.0
 1
 1
 patches
@@ -248,7 +248,7 @@ ant-population
 ant-population
 0
 500
-13.0
+15.0
 1
 1
 NIL
@@ -263,7 +263,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-0.5
+12.0
 0.5
 1
 NIL
