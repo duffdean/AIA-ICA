@@ -1,8 +1,10 @@
+globals [ pheromone-fade-rate ]   ;Probably make a slider value, or look into variable diffusion rates.
 breed [ants ant]
 breed [pheromones pher]
 
-;;ants-own [ph-trail]
-
+;----------------------------------------------------
+;Properties                                         |
+;----------------------------------------------------
 patches-own
 [
   pheromone
@@ -15,24 +17,66 @@ ants-own
 ]
 
 
-
-to setup-ants
-  
+;----------------------------------------------------
+;Setup                                              |
+;----------------------------------------------------
+to setup-ants  
   setup-pheromones
-  breed-ants  
-  
+  breed-ants    
 end
 
 
-to setup-pheromones
+to setup-pheromones  
   
   ask patches
   [
-    ;set pcolor 75
-    ;set pheromone 0
+    set pheromone [0 0 0]
   ]
   
 end
+
+;----------------------------------------------------
+;Actions/Procedures                                 |
+;----------------------------------------------------
+to ants-go
+  
+  set pheromone-fade-rate pheromone-decay-rate
+  
+  ask pheromones 
+  [
+    set color color - pheromone-fade-rate
+    if color mod 50 < 1  [ die ]
+    set shape "dot" 
+  ]
+  
+  ask ants
+  [    
+    move-ants
+    avoid-wall
+    
+    if (item 0 pcolor) > 0  ;Release pheromones if repellent detected. Need to expand on this to look at intensity etc.
+    [
+       hatch-pheromones 1   ;Current way of pheromone trail, but dont think its the right way.
+    ]
+   
+    
+    set shape "ant"
+    set size 3    
+    set pheromone [0 0 0]
+    ;let id (identity - 1)
+    ;let my-pheromone (item 1 pheromone)
+  ]
+  
+  ask patches
+  [
+    set pheromone [0 50 0]
+  ]
+  
+  ;diffuse pheromone (20 / 100) ;set 20 to be a slider var ;Issue with diffuse also as diffuse needs to be an int, not a list...
+  
+  display
+end
+
 
 to breed-ants
   create-ants ant-population
@@ -42,48 +86,17 @@ to breed-ants
     setxy 31 31 
     set color red     
     
-    set pheromone pheromone + 1
+    set pheromone [0 0 0]
   ]
+  
 end
 
-to move-ants
+to move-ants  
   avoid-wall
   wiggle
-  fd 0.5 
+  
+  fd 0.5   
 end
-
-to ants-go
-  
-  ask pheromones 
-  [
-    set color color - 1    
-    if color mod 50 < 1  [ die ]
-    set shape "dot" 
-  ]
-  
-  ask ants
-  [    
-    move-ants
-    avoid-wall
-    ;hatch-pheromones 1   ;Current way of pheromone trail, but dont think its the right way.
-    
-    set shape "ant"
-    set size 3    
-    set pheromone pheromone + 1
-    ;let id (identity - 1)
-    ;let my-pheromone (item 1 pheromone)
-  ]
-  
-  ask patches
-  [
-   set pheromone pheromone + 1
-  ]
-  
-  diffuse pheromone (20 / 100) ;set 20 to be a slider var
-  
-  display
-end
-
 
 to avoid-wall
   while    
@@ -104,8 +117,10 @@ end
 to release-pheromone
   diffuse pheromone (50 / 100)
   ask patches
-  [ set pheromone pheromone * (100 - 10) / 100
-    recolour-patch ]
+  [ 
+    set pheromone pheromone * (100 - 10) / 100
+    recolour-patch 
+  ]
 end
 
 to show-trail  
@@ -117,3 +132,4 @@ to recolour-patch
   set pcolor [88 88 88]  
   ;;set pcolor scale-color green pheromone 0.1 5 
 end
+
