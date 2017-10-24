@@ -1,52 +1,77 @@
+patches-own [
+  is-wall?
+  repellent
+  pheromone
+  old-repellent
+  old-pheromone
+]
+
 ; Commence rendering the box from which the ants will escape.
 to render-box
-  let external-xborder ((max-pxcor - 56) / 2)
-  let external-yborder ((max-pycor - 56) / 2)
+  ask patches [ set is-wall? false ]
+  
+  let external-xborder ((max-pxcor - box-width) / 2)
+  let external-yborder ((max-pycor - box-height) / 2)
 
   let x1 0 + external-xborder
   let x2 0 + (max-pxcor - external-xborder)
   let y1 0 + external-yborder
   let y2 0 + (max-pycor - external-yborder)
 
-  render-horizontal-walls x1 x2 y1 y2
-  render-vertical-walls x1 x2 y1 y2
-
-  open-exit y2
+  set-horizontal-walls x1 x2 y1 y2
+  set-vertical-walls x1 x2 y1 y2
+  set-exit y2
+  
+  render-map
 end
 
 ; Render the horizontal walls of the box.
-to render-horizontal-walls [x1 x2 y1 y2]
+to set-horizontal-walls [x1 x2 y1 y2]
   let x x1
 
   while [x <= x2] [
-    ask patch x y1 [ set pcolor [0 0 0] ]
-    ask patch x y2 [ set pcolor [0 0 0] ]
+    ask patch x y1 [ set is-wall? true ]
+    ask patch x y2 [ set is-wall? true ]
     set x x + 1
   ]
 end
 
 ; Render the vertical walls of the room.
-to render-vertical-walls [x1 x2 y1 y2]
+to set-vertical-walls [x1 x2 y1 y2]
   let y y1
 
   while [y <= y2] [
-    ask patch x1 y [ set pcolor [0 0 0] ]
-    ask patch x2 y [ set pcolor [0 0 0] ]
+    ask patch x1 y [ set is-wall? true ]
+    ask patch x2 y [ set is-wall? true ]
     set y y + 1
   ]
 end
 
 ; Open up an exit (currently at the north-facing wall only).
-to open-exit [y]
+to set-exit [y]
   let x1 0 + ((max-pxcor - exit-width) / 2)
   let x2 0 + ((max-pxcor + exit-width) / 2)
 
   let x x1
 
   while [x <= x2] [
-    ask patch x y [set pcolor [0 0 255]]
+    ask patch x y [ set is-wall? false ]
 
     set x x + 1
+  ]
+end
+
+to render-map
+  ask patches [
+    set repellent 0
+    set pheromone 0
+    
+    ifelse is-wall? [
+      set pcolor [0 0 0]
+    ]
+    [
+      set pcolor [0 0 255]
+    ]
   ]
 end
 

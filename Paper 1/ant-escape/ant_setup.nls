@@ -5,10 +5,10 @@ breed [pheromones pher]
 ;----------------------------------------------------
 ;Properties                                         |
 ;----------------------------------------------------
-patches-own
-[
-  pheromone
-]
+;patches-own
+;[
+;  pheromone
+;]
 
 ants-own
 [
@@ -21,19 +21,19 @@ ants-own
 ;Setup                                              |
 ;----------------------------------------------------
 to setup-ants  
-  setup-pheromones
+  ;setup-pheromones
   breed-ants    
 end
 
 
-to setup-pheromones  
-  
-  ask patches
-  [
-    set pheromone [0 0 0]
-  ]
-  
-end
+;to setup-pheromones  
+;  
+;  ask patches
+;  [
+;    set pheromone [0 0 0]
+;  ]
+;  
+;end
 
 ;----------------------------------------------------
 ;Actions/Procedures                                 |
@@ -67,10 +67,10 @@ to ants-go
     ;let my-pheromone (item 1 pheromone)
   ]
   
-  ask patches
-  [
-    set pheromone [0 50 0]
-  ]
+  ;ask patches
+  ;[
+  ;  set pheromone [0 50 0]
+  ;]
   
   ;diffuse pheromone (20 / 100) ;set 20 to be a slider var ;Issue with diffuse also as diffuse needs to be an int, not a list...
   
@@ -115,12 +115,12 @@ to avoid-wall
 end
 
 to release-pheromone
-  diffuse pheromone (50 / 100)
-  ask patches
-  [ 
-    set pheromone pheromone * (100 - 10) / 100
-    recolour-patch 
-  ]
+  ;diffuse pheromone (50 / 100)
+  ;ask patches
+  ;[ 
+  ;  set pheromone pheromone * (100 - 10) / 100
+  ;  recolour-patch 
+  ;]
 end
 
 to show-trail  

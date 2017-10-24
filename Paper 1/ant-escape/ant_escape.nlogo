@@ -10,16 +10,19 @@ to setup
 
   set mouse-up? true
 
-  ask patches [set pcolor [0 0 255]]
-
   render-box
   setup-ants
 end
 
 to go
   ants-go
-  mouse-click?
+  capture-old-values
   spread-repellent
+  decay-repellent
+
+  update-patches
+
+  mouse-click?
   tick
 end
 
@@ -37,38 +40,46 @@ to mouse-click?
 end
 
 to drop-repellent
-  if pcolor != [0 0 0] [
-    set pcolor replace-item 0 pcolor repellent-intensity
+  if not is-wall? [
+    set repellent repellent-intensity
+  ]
+end
+
+to capture-old-values
+  ask patches [
+    set old-repellent repellent
+    set old-pheromone pheromone
   ]
 end
 
 to spread-repellent
   ask patches [
-    if (item 0 pcolor) > 0 [
-      distribute-repellent (item 0 pcolor)
-      decay-repellent
+    if old-repellent > 0 [
+      distribute-repellent (old-repellent)
     ]
   ]
 end
 
-to distribute-repellent [source-color]
+to distribute-repellent [source-repellent]
   ask neighbors4 [
-    if pcolor != [0 0 0] [
-      let new-color (item 0 pcolor)
-      set new-color new-color + (source-color * (repellent-transfer / 100))
-      if new-color > 255 [ set new-color 255 ]
-
-      set pcolor replace-item 0 pcolor new-color
+    if not is-wall? [
+      set repellent repellent + round (source-repellent * (repellent-transfer / 100))
+      if repellent > 255 [ set repellent 255 ]
     ]
   ]
 end
 
 to decay-repellent
-  let new-color (item 0 pcolor)
-  set new-color new-color - (new-color * (repellent-decay / 100))
-  if new-color < 0 [ set new-color 0 ]
+  ask patches [
+    set repellent repellent - round (old-repellent * (repellent-decay / 100))
+    if repellent < 0 [ set repellent 0 ]
+  ]
+end
 
-  set pcolor replace-item 0 pcolor new-color
+to update-patches
+  ask patches [
+    if not is-wall? [ set pcolor (list repellent pheromone 255) ]
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -124,7 +135,7 @@ box-width
 box-width
 10
 56
-55.0
+33.0
 1
 1
 patches
@@ -139,7 +150,7 @@ box-height
 box-height
 10
 56
-56.0
+30.0
 1
 1
 patches
@@ -203,7 +214,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-253.0
+255.0
 1
 1
 NIL
@@ -218,7 +229,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-50.0
+5.0
 1
 1
 %
@@ -233,7 +244,7 @@ repellent-decay
 repellent-decay
 0
 100
-9.0
+16.0
 1
 1
 %
@@ -248,7 +259,7 @@ ant-population
 ant-population
 0
 500
-13.0
+0.0
 1
 1
 NIL
@@ -634,7 +645,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.1
+NetLogo 6.0.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
