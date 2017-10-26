@@ -79,6 +79,7 @@ end
 to update-patches
   ask patches [
     if not is-wall? [ set pcolor (list repellent pheromone 255) ]
+    ;set pcolor scale-color green pheromone 0.1 5
   ]
 end
 @#$#@#$#@
@@ -135,7 +136,7 @@ box-width
 box-width
 10
 56
-33.0
+53.0
 1
 1
 patches
@@ -150,7 +151,7 @@ box-height
 box-height
 10
 56
-30.0
+56.0
 1
 1
 patches
@@ -182,7 +183,7 @@ exit-width
 exit-width
 1
 10
-6.0
+5.0
 1
 1
 NIL
@@ -214,7 +215,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-255.0
+53.0
 1
 1
 NIL
@@ -229,7 +230,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-5.0
+28.0
 1
 1
 %
@@ -244,7 +245,7 @@ repellent-decay
 repellent-decay
 0
 100
-16.0
+15.0
 1
 1
 %
@@ -259,7 +260,7 @@ ant-population
 ant-population
 0
 500
-0.0
+2.0
 1
 1
 NIL
@@ -267,15 +268,30 @@ HORIZONTAL
 
 SLIDER
 10
-105
+95
 140
-138
+128
 pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-0.5
-0.5
+0.6
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+10
+135
+140
+168
+diffuse-rate
+diffuse-rate
+0
+100
+0.0
+0.1
 1
 NIL
 HORIZONTAL

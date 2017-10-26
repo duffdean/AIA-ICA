@@ -1,83 +1,36 @@
-globals [ pheromone-fade-rate ]   ;Probably make a slider value, or look into variable diffusion rates.
 breed [ants ant]
-breed [pheromones pher]
-
-;----------------------------------------------------
-;Properties                                         |
-;----------------------------------------------------
-patches-own
-[
-  pheromone
-]
 
 ants-own
 [
   identity
   pheromone-size 
+  is-following-pheromone
 ]
 
-
-;----------------------------------------------------
-;Setup                                              |
-;----------------------------------------------------
 to setup-ants  
-  setup-pheromones
   breed-ants    
 end
 
-
-to setup-pheromones  
-  
-  ask patches
-  [
-    set pheromone [0 0 0]
-  ]
-  
-end
-
-;----------------------------------------------------
-;Actions/Procedures                                 |
-;----------------------------------------------------
 to ants-go
-  
-  set pheromone-fade-rate pheromone-decay-rate
-  
-  ask pheromones 
-  [
-    set color color - pheromone-fade-rate
-    if color mod 50 < 1  [ die ]
-    set shape "dot" 
-  ]
   
   ask ants
   [    
     move-ants
     avoid-wall
-    
-    activate-pheromone   
-    
+        
     set shape "ant"
-    set size 3    
-    set pheromone [0 0 0]
+    set size 3 
+ 
+    release-pheromone   
     
-    release-pheromone2 (item 1 pheromone)
-    
-    
-    ;let id (identity - 1)
-    ;let my-pheromone (item 1 pheromone)
+    check-for-trail
   ]
   
-  ask patches
-  [
-    set pheromone [0 0 0]
-    
-    ;release-pheromone2 (item 1 pheromone)
-    
-  ]
+  diffuse pheromone (diffuse-rate / 100)
   
-  ;diffuse pheromone (20 / 100) ;set 20 to be a slider var ;Issue with diffuse also as diffuse needs to be an int, not a list...
+  dissipate-pheromone
   
-  display
+ ; display
 end
 
 
@@ -88,18 +41,26 @@ to breed-ants
   [
     setxy 31 31 
     set color red     
-    
-    set pheromone [0 0 0]
   ]
   
 end
 
+
 to move-ants  
   avoid-wall
-  wiggle
   
-  fd 0.5   
+  check-for-trail
+  ;;make sure that we have checked for trail before we move forward
+  
+  ;wiggle
+  ;fd 0.5 
+  
+  rt random 40
+  lt random 40
+  fd 1
+  
 end
+
 
 to avoid-wall
   while    
@@ -117,53 +78,79 @@ to avoid-wall
   ]
 end
 
-to activate-pheromone
-  if (item 0 pcolor) > 0  ;Release pheromones if repellent detected. Need to expand on this to look at intensity etc.
-    [
-      release-pheromone2 (item 1 pheromone)
-      ;hatch-pheromones 1   ;Current way of pheromone trail, but dont think its the right way.
-    ]
-end
-
-
-to release-pheromone2 [source-color]
-  
-  let new-color (item 1 pheromone)
-  set new-color new-color + (source-color + 70)
-  if new-color > 255 [ set new-color 255 ]
-
-  set pheromone replace-item 1 pheromone new-color
-  ;user-message pheromone
-  ;set pheromone replace-item 1 pheromone new-color
-  ;set pheromone replace-item 1 pheromone  (1 * (100 - 25) / 100)    
-  
-  display-pheromone (item 1 pheromone)
-end
-
-to display-pheromone [source-color]
-  let new-color (item 1 pcolor)
-  ;user-message (word "source-color " source-color)
-  ;user-message (word "(item 1 pcolor) " (item 1 pcolor))
-  ;user-message (word "new-color " new-color)
-  set pcolor replace-item 1 pcolor source-color
-end
-
 to release-pheromone
-  ;diffuse pheromone (50 / 100)
-  ;ask patches
-  ;[ 
-  ;  set pheromone pheromone * (100 - 10) / 100
-  ;  recolour-patch 
-  ;]
+  ;commented out if check for time being to work on following trails
+ ; if (item 0 pcolor) > 0  ;Release pheromones if repellent detected. Need to expand on this to look at intensity etc.
+   ; [
+     
+      ;if pheromone > 255 [ set pheromone 255 ]
+   ; ]
+  
+  ifelse (pheromone + 80) > 255
+  [    
+    set pheromone 255
+    set antID who
+  ]
+  [   
+    set pheromone pheromone + 80 
+    set antID who
+  ]
+  
 end
 
-to show-trail  
-  ;set pcolor blue 
-  ;set pcolor scale-color green pheromone 0.1 5 
+to check-for-trail
+  ;user-message (word "antID: " antID " currentAnt:" who)
+ if pheromone < 255 and antID != who [
+    let scent-ahead pheromone-scent-at-angle   0
+    let scent-right pheromone-scent-at-angle  45
+    let scent-left  pheromone-scent-at-angle -45
+    ;user-message (word "ahead: " scent-ahead " right: " scent-right " left: " scent-left)
+    if (scent-right > scent-ahead) or (scent-left > scent-ahead) [
+      ifelse scent-right > scent-left
+        [ 
+          user-message "found ph right"
+          rt 45
+          set is-following-pheromone true
+      ]
+        [ 
+        user-message scent-left
+        lt 45 
+         set is-following-pheromone true
+      ]
+    ]
+    
+    ifelse (scent-ahead >= scent-left) or (scent-ahead >= scent-right)
+    [
+      user-message scent-ahead
+      set is-following-pheromone true 
+    ]
+    [
+      user-message (word "ahead: " scent-ahead " right: " scent-right " left: " scent-left)
+      set is-following-pheromone false
+    ]
+    
+  ]
 end
 
-to recolour-patch
-  set pcolor [88 88 88]  
-  ;;set pcolor scale-color green pheromone 0.1 5 
+to-report pheromone-scent-at-angle [ angle ]
+  let p patch-right-and-ahead angle 1
+  if p = nobody [ report 0 ]
+  ;user-message (p)
+  report [ pheromone ] of p
 end
 
+to dissipate-pheromone
+  ask patches [    
+    ;ifelse pheromone * (100 - pheromone-decay-rate) / 100 > 255 ;;anything over 100 for this value and the pheromone spreads out on its own
+    ;[
+    ;  set pheromone 255
+    ;]
+    ;[
+    ;  set pheromone pheromone * (100 - pheromone-decay-rate) / 100
+    ;if pheromone < 0.05 [ set pheromone 0 ]
+    ;]
+    
+    set pheromone pheromone * (100 - pheromone-decay-rate) / 100
+    if pheromone < 0.05 [ set pheromone 0 ]
+  ]
+end

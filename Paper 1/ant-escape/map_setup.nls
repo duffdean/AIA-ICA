@@ -4,6 +4,7 @@ patches-own [
   pheromone
   old-repellent
   old-pheromone
+  antID ;;added this to see if i can figure out ants following their own trail
 ]
 
 ; Commence rendering the box from which the ants will escape.
