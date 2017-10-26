@@ -136,7 +136,7 @@ box-width
 box-width
 10
 56
-53.0
+56.0
 1
 1
 patches
@@ -183,7 +183,7 @@ exit-width
 exit-width
 1
 10
-5.0
+10.0
 1
 1
 NIL
@@ -215,7 +215,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-53.0
+16.0
 1
 1
 NIL
@@ -230,7 +230,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-28.0
+14.0
 1
 1
 %
@@ -245,7 +245,7 @@ repellent-decay
 repellent-decay
 0
 100
-15.0
+12.0
 1
 1
 %
@@ -260,7 +260,7 @@ ant-population
 ant-population
 0
 500
-2.0
+4.0
 1
 1
 NIL
@@ -275,7 +275,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-0.6
+0.8
 0.1
 1
 NIL
@@ -290,7 +290,7 @@ diffuse-rate
 diffuse-rate
 0
 100
-0.0
+3.0
 0.1
 1
 NIL

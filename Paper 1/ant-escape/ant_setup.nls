@@ -55,8 +55,8 @@ to move-ants
   ;wiggle
   ;fd 0.5 
   
-  rt random 40
-  lt random 40
+  rt random 45
+  lt random 45
   fd 1
   
 end
@@ -104,21 +104,21 @@ end
 
 to check-for-trail
   ;user-message (word "antID: " antID " currentAnt:" who)
- if pheromone < 255 and antID != who [
-    let scent-ahead pheromone-scent-at-angle   0
+  
+  let scent-ahead pheromone-scent-at-angle   0
     let scent-right pheromone-scent-at-angle  45
     let scent-left  pheromone-scent-at-angle -45
     ;user-message (word "ahead: " scent-ahead " right: " scent-right " left: " scent-left)
     if (scent-right > scent-ahead) or (scent-left > scent-ahead) [
       ifelse scent-right > scent-left
         [ 
-          user-message "found ph right"
+         ; user-message "found ph right"
           rt 45
           set is-following-pheromone true
       ]
         [ 
-        user-message scent-left
-        lt 45 
+         ;user-message scent-left
+         lt 45 
          set is-following-pheromone true
       ]
     ]
@@ -132,8 +132,6 @@ to check-for-trail
       ;user-message (word "ahead: " scent-ahead " right: " scent-right " left: " scent-left)
       set is-following-pheromone false
     ]
-    
-  ]
 end
 
 to-report pheromone-scent-at-angle [ angle ]
