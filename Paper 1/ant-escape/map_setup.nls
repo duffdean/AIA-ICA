@@ -1,5 +1,6 @@
 patches-own [
   is-wall?
+  is-exit?
   repellent
   pheromone
   old-repellent
@@ -10,6 +11,7 @@ patches-own [
 ; Commence rendering the box from which the ants will escape.
 to render-box
   ask patches [ set is-wall? false ]
+  ask patches [ set is-exit? false ]
   
   let external-xborder ((max-pxcor - box-width) / 2)
   let external-yborder ((max-pycor - box-height) / 2)
@@ -57,7 +59,8 @@ to set-exit [y]
 
   while [x <= x2] [
     ask patch x y [ set is-wall? false ]
-
+    ask patch x y [ set is-exit? true ]
+    
     set x x + 1
   ]
 end
@@ -71,8 +74,14 @@ to render-map
       set pcolor [0 0 0]
     ]
     [
-      set pcolor [0 0 255]
+      ifelse is-exit? [
+        set pcolor [0 0 200]
+      ]
+      [
+        set pcolor [0 0 255]
+      ]
     ]
+    
   ]
 end
 
