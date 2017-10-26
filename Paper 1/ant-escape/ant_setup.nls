@@ -72,10 +72,10 @@ end
 
 ;Releasese pheromone and sets stressed flag if the ant finds a patch with repellent. Will continue to release if stressed.
 to release-pheromone
-  if (item 0 pcolor) > 0 [
+  if repellent > 0 [
    ask ants[
       if any? ants-on neighbors [
-        set is-stressed? true
+        ;set is-stressed? true
       ]
     ]
   ]
@@ -88,7 +88,7 @@ to release-pheromone
         ;set antID who   
       ]
       [   
-        set pheromone pheromone + 10 
+        set pheromone pheromone + 70 
         ;set antID who
       ]
     ;]
@@ -109,6 +109,7 @@ to check-for-repellent
       face p
       ;move-to p
       fd 1
+      set is-stressed? true
     ]
   ]
 end

@@ -275,7 +275,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-0.8
+3.1
 0.1
 1
 NIL
@@ -290,7 +290,7 @@ diffuse-rate
 diffuse-rate
 0
 100
-3.0
+7.6
 0.1
 1
 NIL
@@ -661,7 +661,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.1
+NetLogo 6.0.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
