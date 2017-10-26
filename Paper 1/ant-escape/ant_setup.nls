@@ -86,15 +86,19 @@ to release-pheromone
       ;if pheromone > 255 [ set pheromone 255 ]
    ; ]
   
-  ifelse (pheromone + 80) > 255
-  [    
-    set pheromone 255
-    set antID who
+  if (item 0 pcolor) > 0
+  [
+    ifelse (pheromone + 80) > 255
+    [    
+      set pheromone 255
+      set antID who
+    ]
+    [   
+      set pheromone pheromone + 80 
+      set antID who
+    ]
   ]
-  [   
-    set pheromone pheromone + 80 
-    set antID who
-  ]
+ 
   
 end
 
@@ -121,11 +125,11 @@ to check-for-trail
     
     ifelse (scent-ahead >= scent-left) or (scent-ahead >= scent-right)
     [
-      user-message scent-ahead
+      ;user-message scent-ahead
       set is-following-pheromone true 
     ]
     [
-      user-message (word "ahead: " scent-ahead " right: " scent-right " left: " scent-left)
+      ;user-message (word "ahead: " scent-ahead " right: " scent-right " left: " scent-left)
       set is-following-pheromone false
     ]
     
