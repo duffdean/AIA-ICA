@@ -3,6 +3,7 @@ __includes [
   "ant_setup.nls"
   "repellent-ops.nls"
   "patch-ops.nls"
+  "report.nls"
   "utils.nls"]
 
 globals [ mouse-up? ]
@@ -28,6 +29,7 @@ to go
 
   update-patches
 
+  exit-found ;DanB
   mouse-click?
   tick
 end
@@ -114,7 +116,7 @@ box-height
 box-height
 10
 56
-56.0
+50.0
 1
 1
 patches
@@ -223,7 +225,7 @@ ant-population
 ant-population
 0
 500
-0.0
+25.0
 1
 1
 NIL
@@ -290,6 +292,75 @@ repellent-line
 1
 %
 HORIZONTAL
+
+MONITOR
+870
+85
+975
+130
+ants found exit
+ants-found-exit
+17
+1
+11
+
+MONITOR
+755
+85
+860
+130
+tick first exit
+tick-on-first-find
+17
+1
+11
+
+PLOT
+755
+155
+975
+305
+Escape distrubution of ants
+time
+ants
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[ \n ;stops spam of a load of data points\n if old-ants-found-exit < ants-found-exit\n [\n  plotxy ticks ants-found-exit\n ]\n]"
+
+MONITOR
+755
+25
+860
+70
+tick on last exit
+tick-on-last-find
+17
+1
+11
+
+PLOT
+755
+315
+975
+465
+Time interval frequency
+time
+frequency
+0.0
+1.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks ((ants-found-exit / ticks) * 10)\n   ]\n  ] \n]"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -656,7 +727,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.2
+NetLogo 6.0.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

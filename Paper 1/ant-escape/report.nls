@@ -1,0 +1,42 @@
+globals 
+[ 
+  tick-on-first-find
+  tick-on-last-find
+  ants-found-exit
+  old-ants-found-exit
+]
+
+
+to exit-found
+  ;this helps the charts detect when they should plot a change
+  set old-ants-found-exit ants-found-exit
+  
+  ask patches[
+    ask ants-here[
+      
+      ;don't count ants that have found the exit already
+      ifelse has-found-exit?[
+        ;nothing happens
+      ]
+      [
+        if is-exit? [
+          
+          ;we start all the reporting when we see the first ant leave
+          if tick-on-first-find = 0 [
+            set tick-on-first-find ticks
+          ]
+          set ants-found-exit ants-found-exit + 1
+          set has-found-exit? true
+          
+          ;all ants have found the exit
+          if ants-found-exit = ant-population [
+            set tick-on-last-find ticks
+            
+            ;we don't have anything else to report on so we'll stop the model
+            stop
+          ]
+        ]
+      ]      
+    ]
+  ]
+end

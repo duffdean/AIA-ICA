@@ -5,6 +5,7 @@ ants-own
 [ 
   is-stressed?
   is-following-pheromone
+  has-found-exit?
 ]
 
 
@@ -38,7 +39,8 @@ to breed-ants
   ask ants [ 
     setxy 31 31 
     set color red 
-    set is-stressed? false    
+    set is-stressed? false
+    set has-found-exit? false
   ]  
 end
 
