@@ -1,0 +1,50 @@
+; Drop a line of repellent across the south end of the box.
+to drop-repellent-line
+  let external-xborder ((max-pxcor - (box-width * (repellent-line / 100))) / 2)
+  let external-yborder ((max-pycor - box-height) / 2)
+
+  let x1 0 + external-xborder
+  let x2 0 + (max-pxcor - external-xborder)
+  let y 0 + external-yborder + 2
+
+  let x x1
+
+  while [x <= x2] [
+    ask patch x y [ drop-repellent ]
+    set x x + 1
+  ]
+end
+
+; Drop repellent at the set intensity at a specific patch.
+to drop-repellent
+  if not is-wall? [
+    set repellent repellent-intensity
+  ]
+end
+
+; Spread the repellent out into all four cardinal directions.
+to spread-repellent
+  ask patches [
+    if old-repellent > 0 [
+      distribute-repellent (old-repellent)
+    ]
+  ]
+end
+
+; Distribute repellent by a specified percentage.
+to distribute-repellent [source-repellent]
+  ask neighbors4 [
+    if not is-wall? [
+      set repellent repellent + round (source-repellent * (repellent-transfer / 100))
+      if repellent > 255 [ set repellent 255 ]
+    ]
+  ]
+end
+
+; Decay the repellent levels by a specified percentage.
+to decay-repellent
+  ask patches [
+    set repellent repellent - round (old-repellent * (repellent-decay / 100))
+    if repellent < 0 [ set repellent 0 ]
+  ]
+end

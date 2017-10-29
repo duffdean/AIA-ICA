@@ -1,0 +1,16 @@
+; Copy the old repellent and pheromone values to prevent them being overwritten and
+; messing with code that depends on them.
+to capture-old-values
+  ask patches [
+    set old-repellent repellent
+    set old-pheromone pheromone
+  ]
+end
+
+; Update patches to reflect their new repellent and pheromone values.
+to update-patches
+  ask patches [
+    if not is-wall? [ set pcolor (list repellent pheromone (item 2 pcolor)) ]
+    ;set pcolor scale-color green pheromone 0.1 5
+  ]
+end

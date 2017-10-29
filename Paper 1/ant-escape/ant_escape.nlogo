@@ -1,4 +1,9 @@
-__includes ["map_setup.nls" "ant_setup.nls" "utils.nls"]
+__includes [
+  "map_setup.nls"
+  "ant_setup.nls"
+  "repellent-ops.nls"
+  "patch-ops.nls"
+  "utils.nls"]
 
 globals [ mouse-up? ]
 
@@ -14,6 +19,7 @@ to setup
   setup-ants
 end
 
+; Run the model!
 to go
   ants-go
   capture-old-values
@@ -26,6 +32,7 @@ to go
   tick
 end
 
+; Detect if the left mouse button has been clicked on the model.
 to mouse-click?
   ask patches [
     ifelse mouse-up? [
@@ -36,66 +43,6 @@ to mouse-click?
       ]
     ]
     [ if not mouse-down? [ set mouse-up? true ] ]
-  ]
-end
-
-to drop-repellent-line
-  let external-xborder ((max-pxcor - (box-width * (repellent-line / 100))) / 2)
-  let external-yborder ((max-pycor - box-height) / 2)
-
-  let x1 0 + external-xborder
-  let x2 0 + (max-pxcor - external-xborder)
-  let y 0 + external-yborder + 2
-
-  let x x1
-
-  while [x <= x2] [
-    ask patch x y [ drop-repellent ]
-    set x x + 1
-  ]
-end
-
-to drop-repellent
-  if not is-wall? [
-    set repellent repellent-intensity
-  ]
-end
-
-to capture-old-values
-  ask patches [
-    set old-repellent repellent
-    set old-pheromone pheromone
-  ]
-end
-
-to spread-repellent
-  ask patches [
-    if old-repellent > 0 [
-      distribute-repellent (old-repellent)
-    ]
-  ]
-end
-
-to distribute-repellent [source-repellent]
-  ask neighbors4 [
-    if not is-wall? [
-      set repellent repellent + round (source-repellent * (repellent-transfer / 100))
-      if repellent > 255 [ set repellent 255 ]
-    ]
-  ]
-end
-
-to decay-repellent
-  ask patches [
-    set repellent repellent - round (old-repellent * (repellent-decay / 100))
-    if repellent < 0 [ set repellent 0 ]
-  ]
-end
-
-to update-patches
-  ask patches [
-    if not is-wall? [ set pcolor (list repellent pheromone (item 2 pcolor)) ]
-    ;set pcolor scale-color green pheromone 0.1 5
   ]
 end
 @#$#@#$#@
