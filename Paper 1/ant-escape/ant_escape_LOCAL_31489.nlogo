@@ -39,19 +39,6 @@ to mouse-click?
   ]
 end
 
-to drop-repellent-line
-  let external-xborder ((max-pxcor - (box-width * (repellent-line / 100))) / 2)
-  let x1 0 + external-xborder
-  let x2 0 + (max-pxcor - external-xborder)
-
-  let x x1
-
-  while [x <= x2] [
-    ask patch x 7 [ drop-repellent ]
-    set x x + 1
-  ]
-end
-
 to drop-repellent
   if not is-wall? [
     set repellent repellent-intensity
@@ -91,8 +78,7 @@ end
 
 to update-patches
   ask patches [
-    if not is-wall? [ set pcolor (list repellent pheromone (item 2 pcolor)) ]
-    ;set pcolor scale-color green pheromone 0.1 5
+    if not is-wall? [ set pcolor (list repellent pheromone 255) ]
   ]
 end
 @#$#@#$#@
@@ -149,7 +135,7 @@ box-width
 box-width
 10
 56
-56.0
+33.0
 1
 1
 patches
@@ -164,7 +150,7 @@ box-height
 box-height
 10
 56
-56.0
+30.0
 1
 1
 patches
@@ -196,7 +182,7 @@ exit-width
 exit-width
 1
 10
-10.0
+6.0
 1
 1
 NIL
@@ -228,7 +214,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-16.0
+255.0
 1
 1
 NIL
@@ -243,7 +229,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-14.0
+5.0
 1
 1
 %
@@ -258,7 +244,7 @@ repellent-decay
 repellent-decay
 0
 100
-12.0
+16.0
 1
 1
 %
@@ -281,64 +267,17 @@ HORIZONTAL
 
 SLIDER
 10
-95
+105
 140
-128
+138
 pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-3.1
-0.1
+0.5
+0.5
 1
 NIL
-HORIZONTAL
-
-SLIDER
-10
-135
-140
-168
-diffuse-rate
-diffuse-rate
-0
-100
-7.6
-0.1
-1
-NIL
-HORIZONTAL
-
-BUTTON
-122
-675
-227
-780
-Drop Repellent
-drop-repellent-line\n
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-SLIDER
-225
-780
-745
-813
-repellent-line
-repellent-line
-0
-100
-50.0
-1
-1
-%
 HORIZONTAL
 
 @#$#@#$#@

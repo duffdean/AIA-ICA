@@ -10,19 +10,16 @@ to setup
 
   set mouse-up? true
 
+  ask patches [set pcolor [0 0 255]]
+
   render-box
   setup-ants
 end
 
 to go
   ants-go
-  capture-old-values
-  spread-repellent
-  decay-repellent
-
-  update-patches
-
   mouse-click?
+  spread-repellent
   tick
 end
 
@@ -39,61 +36,39 @@ to mouse-click?
   ]
 end
 
-to drop-repellent-line
-  let external-xborder ((max-pxcor - (box-width * (repellent-line / 100))) / 2)
-  let x1 0 + external-xborder
-  let x2 0 + (max-pxcor - external-xborder)
-
-  let x x1
-
-  while [x <= x2] [
-    ask patch x 7 [ drop-repellent ]
-    set x x + 1
-  ]
-end
-
 to drop-repellent
-  if not is-wall? [
-    set repellent repellent-intensity
-  ]
-end
-
-to capture-old-values
-  ask patches [
-    set old-repellent repellent
-    set old-pheromone pheromone
+  if pcolor != [0 0 0] [
+    set pcolor replace-item 0 pcolor repellent-intensity
   ]
 end
 
 to spread-repellent
   ask patches [
-    if old-repellent > 0 [
-      distribute-repellent (old-repellent)
+    if (item 0 pcolor) > 0 [
+      distribute-repellent (item 0 pcolor)
+      decay-repellent
     ]
   ]
 end
 
-to distribute-repellent [source-repellent]
+to distribute-repellent [source-color]
   ask neighbors4 [
-    if not is-wall? [
-      set repellent repellent + round (source-repellent * (repellent-transfer / 100))
-      if repellent > 255 [ set repellent 255 ]
+    if pcolor != [0 0 0] [
+      let new-color (item 0 pcolor)
+      set new-color new-color + (source-color * (repellent-transfer / 100))
+      if new-color > 255 [ set new-color 255 ]
+
+      set pcolor replace-item 0 pcolor new-color
     ]
   ]
 end
 
 to decay-repellent
-  ask patches [
-    set repellent repellent - round (old-repellent * (repellent-decay / 100))
-    if repellent < 0 [ set repellent 0 ]
-  ]
-end
+  let new-color (item 0 pcolor)
+  set new-color new-color - (new-color * (repellent-decay / 100))
+  if new-color < 0 [ set new-color 0 ]
 
-to update-patches
-  ask patches [
-    if not is-wall? [ set pcolor (list repellent pheromone (item 2 pcolor)) ]
-    ;set pcolor scale-color green pheromone 0.1 5
-  ]
+  set pcolor replace-item 0 pcolor new-color
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -196,7 +171,7 @@ exit-width
 exit-width
 1
 10
-10.0
+6.0
 1
 1
 NIL
@@ -228,7 +203,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-16.0
+253.0
 1
 1
 NIL
@@ -243,7 +218,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-14.0
+50.0
 1
 1
 %
@@ -258,7 +233,7 @@ repellent-decay
 repellent-decay
 0
 100
-12.0
+9.0
 1
 1
 %
@@ -273,7 +248,7 @@ ant-population
 ant-population
 0
 500
-0.0
+15.0
 1
 1
 NIL
@@ -281,64 +256,17 @@ HORIZONTAL
 
 SLIDER
 10
-95
+105
 140
-128
+138
 pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-3.1
-0.1
+12.0
+0.5
 1
 NIL
-HORIZONTAL
-
-SLIDER
-10
-135
-140
-168
-diffuse-rate
-diffuse-rate
-0
-100
-7.6
-0.1
-1
-NIL
-HORIZONTAL
-
-BUTTON
-122
-675
-227
-780
-Drop Repellent
-drop-repellent-line\n
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-SLIDER
-225
-780
-745
-813
-repellent-line
-repellent-line
-0
-100
-50.0
-1
-1
-%
 HORIZONTAL
 
 @#$#@#$#@
