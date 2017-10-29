@@ -41,13 +41,16 @@ end
 
 to drop-repellent-line
   let external-xborder ((max-pxcor - (box-width * (repellent-line / 100))) / 2)
+  let external-yborder ((max-pycor - box-height) / 2)
+
   let x1 0 + external-xborder
   let x2 0 + (max-pxcor - external-xborder)
+  let y 0 + external-yborder + 2
 
   let x x1
 
   while [x <= x2] [
-    ask patch x 7 [ drop-repellent ]
+    ask patch x y [ drop-repellent ]
     set x x + 1
   ]
 end
