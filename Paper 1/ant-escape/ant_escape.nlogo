@@ -144,7 +144,7 @@ exit-width
 exit-width
 1
 10
-10.0
+6.0
 1
 1
 NIL
@@ -206,7 +206,7 @@ ant-population
 ant-population
 0
 500
-36.0
+30.0
 1
 1
 NIL
@@ -435,39 +435,79 @@ HORIZONTAL
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+‘ant-escape’ models an experiment performed in which ants where placed into a room with a single exit of varying width and then compelled to leave the room through the use of a repellent. The model will measure the frequency of ants leaving the room and report on the rate of ants leaving the room. Through this data, the efficiency of ants escape methods can be determined, and analysed further.
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+The model works by enclosing agents in a single exit room, and placing a ‘repellent’ that gradually defuses throughout the room that the agents feels repelled by. Upon the detection of the repellent by an agent, a ‘pheromone’ is released and the agent will run away from the repellent, into an area that has a lower repellent intensity. Other agents can also detect these pheromones and follow them, this may lead to an agent that has detected the repellent and ran from it leaving behind pheromones, to lead other agents through the exit and away from the repellent.
+
+When the first agent leaves the room, a countdown will occur in which after a set amount of ticks (time-to-stop) from the last agent exited (tick on last exit), the model will stop.
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Adjust sliders and configuration as desired.
+
+Configuration:
+•	Ant-population: controls the amount of ants spawned.
+•	Time-to-stop: after this many ticks from the last ant exit stop the model.
+•	Stop-1minute-last-exit: use the ‘time-to-stop’ to stop the simulation, or not.
+•	Kill-ant-after-exit: remove the ants from the model upon finding the exit, or not.
+•	Exit-width: width of the exit to the room.
+•	Box-width: width of the room.
+•	Box-height: height of the room.
+•	Repellent-pad-y: size of the repellent pad on the y axis. 
+•	Repellent-pad-x: size of the repellent pad on the x axis. 
+•	Repellent-intensity: concentration of the repellent upon spawn.
+•	Repellent-transfer: rate of repellent spread
+•	Pheromone-transfer: rate of pheromone spread
+•	Pheromone-decay-rate: rate of pheromone decay
+
+1.	click ‘Setup’
+2.	click ‘Drop repellent’
+3.	click ‘Go’
+
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
+•	grouping of agents
+•	close grouping of agents finding exit
+•	agents leading other agents
+•	small spiralling from the agents, due to pheromone trails
 
 ## THINGS TO TRY
 
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+•	Adjusting the size of the exit
+•	Adjusting the size of the box
+•	Varying the number of agents
+•	Adjusting the intensity of pheromones 
+•	Adjusting the intensity of repellent
+•	Killing or not killing agents once exit is found
+•	Configure experiment end based of time since last agent exit
+•	Enable or disable the pheromone
+•	Run without repellent
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+Applying collisions to the agents to prevent them from walking on top of each other will improve how realistic the model is and potentially show some queuing occurring in the agents.
+
+Provide the ability to add more exits for the agents to escape from.
+
+Create a more complex rooms for the agents to escape from, with potential obstacles that impede the agent’s movement.
 
 ## NETLOGO FEATURES
 
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+•	RGB representation of the map, with red and green used to give a visual indication of the presence of repellent and pheromones, respectively.
+•	Adjustable box and exit size.
+•	Adjustable size of the “pad” that would be soaked in repellent and placed into the box.
+•	Use of additional properties given to patches to which repellent and pheromone values were copied in order to adjust values without interfering with other new changes and maintain consistent patch behaviour.
 
 ## RELATED MODELS
 
-(models in the NetLogo Models Library and elsewhere which are of related interest)
 
 ## CREDITS AND REFERENCES
 
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+Research paper used to develop this model:
+Wang, S., Lv, W., & Song, W. (2015). Behavior of Ants Escaping from a Single-Exit Room. PLoS ONE, 10(6), e0131784. http://doi.org/10.1371/journal.pone.0131784
 @#$#@#$#@
 default
 true
@@ -797,10 +837,642 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.2
+NetLogo 6.0.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="6w" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup
+drop-repellent-pad</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="5w" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup
+drop-repellent-pad</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="4w" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup
+drop-repellent-pad</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="3w" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup
+drop-repellent-pad</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="2w" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup
+drop-repellent-pad</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="1w" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup
+drop-repellent-pad</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="6w - no repellent" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="5w - no repellent" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="4w - no repellent" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="3w - no repellent" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="2w - no repellent" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="1w - no repellent" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>ticks</metric>
+    <metric>frequency</metric>
+    <metric>ants-found-exit</metric>
+    <enumeratedValueSet variable="repellent-intensity">
+      <value value="252"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-transfer">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-height">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-1minute-last-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="enable-pheromones">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="time-to-stop">
+      <value value="360"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-transfer">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kill-ant-after-exit">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-decay-rate">
+      <value value="0.6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exit-width">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ant-population">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="box-width">
+      <value value="56"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pheromone-intensity">
+      <value value="255"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-x">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="repellent-pad-y">
+      <value value="40"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
