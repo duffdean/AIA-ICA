@@ -5,6 +5,7 @@ globals
   tick-on-last-find
   ants-found-exit
   old-ants-found-exit
+  frequency
 ]
 
 to experiment-checks

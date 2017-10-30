@@ -432,7 +432,7 @@ pheromone-transfer
 pheromone-transfer
 0
 100
-10.0
+70.0
 1
 1
 %
