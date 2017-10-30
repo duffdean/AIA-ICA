@@ -238,7 +238,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-1.3
+0.6
 0.1
 1
 NIL
@@ -432,7 +432,7 @@ pheromone-transfer
 pheromone-transfer
 0
 100
-10.0
+70.0
 1
 1
 %

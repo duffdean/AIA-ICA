@@ -60,7 +60,7 @@ end
 ;Detect any scent. Repellent or pheromone
 to detect-scent [id-of-ant]
   
-  let pher-targets patches in-cone 3 75   
+  let pher-targets patches in-cone 1 75   
   let rep-target patch-ahead 1
   
   if patch-ahead  1 != nobody[
@@ -91,9 +91,9 @@ to detect-scent [id-of-ant]
   
   if rep-target != nobody [
     ifelse rep-target > repellent[
+      avoid-wall
         bk 0.5        
         wiggle
-      avoid-wall
         fd 0.5
       ]
       [
@@ -186,7 +186,7 @@ end
 ;If any wall patches are within range, step back turn away and move on.
 to avoid-wall
   while [ 
-    any? patches in-radius 1 with[
+    any? patches in-radius 2 with[
       pcolor = [0 0 0]
      ] 
   ]
