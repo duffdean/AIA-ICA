@@ -265,7 +265,6 @@ NIL
 
 SLIDER
 225
-780
 745
 745
 778
@@ -291,6 +290,19 @@ repellent-pad-y
 40.0
 1
 11
+%
+VERTICAL
+
+MONITOR
+870
+85
+975
+130
+ants found exit
+ants-found-exit
+17
+1
+11
 
 MONITOR
 755
@@ -301,8 +313,55 @@ tick first exit
 tick-on-first-find
 17
 1
-%
-VERTICAL
+11
+
+PLOT
+755
+155
+975
+305
+Escape distrubution of ants
+time
+ants
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[ \n ;stops spam of a load of data points\n if old-ants-found-exit < ants-found-exit\n [\n  plotxy ticks ants-found-exit\n ]\n]"
+
+MONITOR
+755
+25
+860
+70
+tick on last exit
+tick-on-last-find
+17
+1
+11
+
+PLOT
+755
+315
+975
+465
+Time interval frequency
+time
+frequency
+0.0
+1.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks ((ants-found-exit / ticks) * 10)\n   ]\n  ] \n]"
+
 
 @#$#@#$#@
 ## WHAT IS IT?

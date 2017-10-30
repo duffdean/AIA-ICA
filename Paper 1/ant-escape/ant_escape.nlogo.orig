@@ -1,4 +1,10 @@
-__includes ["map_setup.nls" "ant_setup.nls" "utils.nls"]
+__includes [
+  "map_setup.nls"
+  "ant_setup.nls"
+  "repellent-ops.nls"
+  "patch-ops.nls"
+  "report.nls"
+  "utils.nls"]
 
 globals [ mouse-up? ]
 
@@ -14,18 +20,21 @@ to setup
   setup-ants
 end
 
+; Run the model!
 to go
   ants-go
   capture-old-values
   spread-repellent
-  decay-repellent
+  ;decay-repellent
 
   update-patches
 
+  exit-found ;DanB
   mouse-click?
   tick
 end
 
+; Detect if the left mouse button has been clicked on the model.
 to mouse-click?
   ask patches [
     ifelse mouse-up? [
@@ -36,49 +45,6 @@ to mouse-click?
       ]
     ]
     [ if not mouse-down? [ set mouse-up? true ] ]
-  ]
-end
-
-to drop-repellent
-  if not is-wall? [
-    set repellent repellent-intensity
-  ]
-end
-
-to capture-old-values
-  ask patches [
-    set old-repellent repellent
-    set old-pheromone pheromone
-  ]
-end
-
-to spread-repellent
-  ask patches [
-    if old-repellent > 0 [
-      distribute-repellent (old-repellent)
-    ]
-  ]
-end
-
-to distribute-repellent [source-repellent]
-  ask neighbors4 [
-    if not is-wall? [
-      set repellent repellent + round (source-repellent * (repellent-transfer / 100))
-      if repellent > 255 [ set repellent 255 ]
-    ]
-  ]
-end
-
-to decay-repellent
-  ask patches [
-    set repellent repellent - round (old-repellent * (repellent-decay / 100))
-    if repellent < 0 [ set repellent 0 ]
-  ]
-end
-
-to update-patches
-  ask patches [
-    if not is-wall? [ set pcolor (list repellent pheromone 255) ]
   ]
 end
 @#$#@#$#@
@@ -135,11 +101,7 @@ box-width
 box-width
 10
 56
-<<<<<<< HEAD
-33.0
-=======
 56.0
->>>>>>> 0d659b17fe5321f774c4172f078c6a8ce2548a76
 1
 1
 patches
@@ -154,7 +116,7 @@ box-height
 box-height
 10
 56
-30.0
+50.0
 1
 1
 patches
@@ -186,7 +148,7 @@ exit-width
 exit-width
 1
 10
-6.0
+10.0
 1
 1
 NIL
@@ -233,22 +195,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-5.0
-1
-1
-%
-HORIZONTAL
-
-SLIDER
-225
-745
-745
-778
-repellent-decay
-repellent-decay
-0
-100
-16.0
+10.0
 1
 1
 %
@@ -263,11 +210,7 @@ ant-population
 ant-population
 0
 500
-<<<<<<< HEAD
-0.0
-=======
-15.0
->>>>>>> 0d659b17fe5321f774c4172f078c6a8ce2548a76
+25.0
 1
 1
 NIL
@@ -275,18 +218,151 @@ HORIZONTAL
 
 SLIDER
 10
-105
+95
 140
-138
+128
 pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-12.0
-0.5
+3.1
+0.1
 1
 NIL
 HORIZONTAL
+
+SLIDER
+10
+135
+140
+168
+diffuse-rate
+diffuse-rate
+0
+100
+7.6
+0.1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+122
+675
+227
+780
+Drop Repellent
+drop-repellent-pad
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+225
+745
+745
+778
+repellent-pad-x
+repellent-pad-x
+0
+100
+60.0
+1
+1
+%
+HORIZONTAL
+
+<<<<<<< HEAD
+SLIDER
+150
+156
+187
+676
+repellent-pad-y
+repellent-pad-y
+0
+100
+40.0
+1
+1
+%
+VERTICAL
+=======
+MONITOR
+870
+85
+975
+130
+ants found exit
+ants-found-exit
+17
+1
+11
+
+MONITOR
+755
+85
+860
+130
+tick first exit
+tick-on-first-find
+17
+1
+11
+
+PLOT
+755
+155
+975
+305
+Escape distrubution of ants
+time
+ants
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[ \n ;stops spam of a load of data points\n if old-ants-found-exit < ants-found-exit\n [\n  plotxy ticks ants-found-exit\n ]\n]"
+
+MONITOR
+755
+25
+860
+70
+tick on last exit
+tick-on-last-find
+17
+1
+11
+
+PLOT
+755
+315
+975
+465
+Time interval frequency
+time
+frequency
+0.0
+1.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks ((ants-found-exit / ticks) * 10)\n   ]\n  ] \n]"
+>>>>>>> 22e2f666d15e45ceb1a0ff32ab4ad41da80164ec
 
 @#$#@#$#@
 ## WHAT IS IT?
