@@ -1,5 +1,5 @@
 breed [ants ant]
-
+;delete this comment
 ants-own
 [ 
   is-stressed?
