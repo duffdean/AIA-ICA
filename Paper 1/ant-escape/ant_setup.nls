@@ -81,12 +81,11 @@ to detect-scent [id-of-ant]
   
   if pher-target != nobody and pher-target != 0  [
     if ([pheromone] of pher-target  > 0) [
-    face pher-target 
+      face pher-target 
       avoid-wall
-    fd 0.5 
-      
-    wiggle
-  ]
+      fd 0.3 
+      wiggle
+    ]
   ]
   
   if rep-target != nobody [
@@ -109,7 +108,7 @@ end
 
 ;Releasese pheromone and sets stressed flag if the ant finds a patch with repellent. Will continue to release if stressed.
 to release-pheromone
-  if not is-stressed? [
+  if not is-stressed? and enable-pheromones = true [
     if (item 0 pcolor) > 0 [
       if any? ants-on patch-here [
         set is-stressed? true
