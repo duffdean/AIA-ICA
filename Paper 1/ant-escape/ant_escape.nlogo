@@ -3,6 +3,7 @@ __includes [
   "ant_setup.nls"
   "repellent-ops.nls"
   "patch-ops.nls"
+  "report.nls"
   "utils.nls"]
 
 globals [ mouse-up? ]
@@ -28,6 +29,7 @@ to go
 
   update-patches
 
+  exit-found ;DanB
   mouse-click?
   tick
 end
@@ -263,6 +265,7 @@ NIL
 
 SLIDER
 225
+780
 745
 745
 778
@@ -287,6 +290,16 @@ repellent-pad-y
 100
 40.0
 1
+11
+
+MONITOR
+755
+85
+860
+130
+tick first exit
+tick-on-first-find
+17
 1
 %
 VERTICAL
