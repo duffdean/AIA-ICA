@@ -125,7 +125,7 @@ end
 ;Attempt at a way of specific where the pheromone is to be dropped, and also giving a patch a turtle id. So they dont follow their own trail
 to drop-pheromone [angle dist ant-id intensity]
   ask patch-here [
-    set pheromone 255
+    set pheromone pheromone-intensity
   ]
 end
 

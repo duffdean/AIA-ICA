@@ -193,7 +193,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-255.0
+252.0
 1
 1
 NIL
@@ -373,7 +373,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    set frequency (ants-found-exit / (ticks - tick-on-first-find))\n    plotxy ticks frequency\n   ]\n  ] \n]"
+"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks (ants-found-exit / (ticks - tick-on-first-find))\n   ]\n  ] \n]"
 
 SWITCH
 10
@@ -445,9 +445,24 @@ SWITCH
 328
 enable-pheromones
 enable-pheromones
-1
+0
 1
 -1000
+
+SLIDER
+225
+815
+745
+848
+pheromone-intensity
+pheromone-intensity
+0
+255
+255.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
