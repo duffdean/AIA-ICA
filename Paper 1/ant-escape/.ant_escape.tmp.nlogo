@@ -432,22 +432,11 @@ pheromone-transfer
 pheromone-transfer
 0
 100
-11.0
+70.0
 1
 1
 %
 HORIZONTAL
-
-SWITCH
-10
-295
-140
-328
-enable-pheromones
-enable-pheromones
-1
-1
--1000
 
 @#$#@#$#@
 ## WHAT IS IT?
