@@ -88,23 +88,6 @@ GRAPHICS-WINDOW
 ticks
 30.0
 
-BUTTON
-10
-10
-145
-43
-Randomise Map
-randomise-map
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 SLIDER
 225
 120
@@ -169,8 +152,8 @@ HORIZONTAL
 
 BUTTON
 155
-35
-210
+15
+225
 85
 ▶️
 go
@@ -215,10 +198,10 @@ repellent-transfer
 HORIZONTAL
 
 SLIDER
-10
-55
-140
-88
+225
+15
+745
+48
 ant-population
 ant-population
 0
@@ -230,10 +213,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-10
-95
-140
-128
+225
+850
+745
+883
 pheromone-decay-rate
 pheromone-decay-rate
 0
@@ -244,26 +227,11 @@ pheromone-decay-rate
 NIL
 HORIZONTAL
 
-SLIDER
-10
-135
-140
-168
-diffuse-rate
-diffuse-rate
-0
-100
-7.6
-0.1
-1
-NIL
-HORIZONTAL
-
 BUTTON
-122
-675
-227
-780
+50
+15
+155
+155
 Drop Repellent
 drop-repellent-pad
 NIL
@@ -292,10 +260,10 @@ repellent-pad-x
 HORIZONTAL
 
 SLIDER
-150
-156
-183
-676
+155
+155
+188
+675
 repellent-pad-y
 repellent-pad-y
 0
@@ -307,10 +275,10 @@ repellent-pad-y
 VERTICAL
 
 MONITOR
-870
-85
-975
-130
+865
+60
+985
+105
 ants found exit
 ants-found-exit
 17
@@ -318,10 +286,10 @@ ants-found-exit
 11
 
 MONITOR
-755
-85
-860
-130
+745
+60
+865
+105
 tick first exit
 tick-on-first-find
 17
@@ -329,10 +297,10 @@ tick-on-first-find
 11
 
 PLOT
-755
-155
-975
-305
+745
+105
+985
+255
 Escape distrubution of ants
 time
 ants
@@ -347,10 +315,10 @@ PENS
 "default" 1.0 2 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[ \n ;stops spam of a load of data points\n if old-ants-found-exit < ants-found-exit\n [\n  plotxy ticks ants-found-exit\n ]\n]"
 
 MONITOR
-755
-25
-860
-70
+745
+15
+865
+60
 tick on final exit
 tick-on-final-find
 17
@@ -358,10 +326,10 @@ tick-on-final-find
 11
 
 PLOT
-755
-315
-975
-465
+745
+255
+985
+405
 Time interval frequency
 time
 frequency
@@ -376,10 +344,10 @@ PENS
 "default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks (ants-found-exit / (ticks - tick-on-first-find))\n   ]\n  ] \n]"
 
 SWITCH
-10
-175
-140
-208
+5
+675
+225
+708
 stop-1minute-last-exit
 stop-1minute-last-exit
 0
@@ -387,10 +355,10 @@ stop-1minute-last-exit
 -1000
 
 SLIDER
-10
-215
-140
-248
+5
+710
+225
+743
 time-to-stop
 time-to-stop
 0
@@ -402,10 +370,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-870
-25
-975
-70
+865
+15
+985
+60
 tick on last exit
 tick-on-last-find
 17
@@ -413,10 +381,10 @@ tick-on-last-find
 11
 
 SWITCH
-10
-255
-140
-288
+5
+745
+225
+778
 kill-ant-after-exit
 kill-ant-after-exit
 0
@@ -439,10 +407,10 @@ pheromone-transfer
 HORIZONTAL
 
 SWITCH
-10
-295
-140
-328
+5
+780
+225
+813
 enable-pheromones
 enable-pheromones
 0
@@ -829,7 +797,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.1
+NetLogo 6.0.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
