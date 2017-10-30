@@ -24,7 +24,7 @@ to go
   ants-go
   capture-old-values
   spread-repellent
-  decay-repellent
+  ;decay-repellent
 
   update-patches
 
@@ -178,7 +178,7 @@ repellent-intensity
 repellent-intensity
 0
 255
-16.0
+255.0
 1
 1
 NIL
@@ -193,22 +193,7 @@ repellent-transfer
 repellent-transfer
 0
 100
-14.0
-1
-1
-%
-HORIZONTAL
-
-SLIDER
-225
-745
-745
-778
-repellent-decay
-repellent-decay
-0
-100
-12.0
+10.0
 1
 1
 %
@@ -265,7 +250,7 @@ BUTTON
 227
 780
 Drop Repellent
-drop-repellent-line\n
+drop-repellent-pad
 NIL
 1
 T
@@ -278,18 +263,33 @@ NIL
 
 SLIDER
 225
-780
 745
-813
-repellent-line
-repellent-line
+745
+778
+repellent-pad-x
+repellent-pad-x
 0
 100
-50.0
+60.0
 1
 1
 %
 HORIZONTAL
+
+SLIDER
+150
+156
+187
+676
+repellent-pad-y
+repellent-pad-y
+0
+100
+40.0
+1
+1
+%
+VERTICAL
 
 @#$#@#$#@
 ## WHAT IS IT?
