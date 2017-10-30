@@ -24,7 +24,6 @@ to ants-go
     set size 3 
     set is-following-pheromone? false
     set is-stressed? false
-    set has-found-exit? false
     release-pheromone
   ]
   
@@ -40,6 +39,7 @@ to breed-ants
     setxy 31 31 
     set color red 
     set is-stressed? false    
+    set has-found-exit? false
   ]  
 end
 
