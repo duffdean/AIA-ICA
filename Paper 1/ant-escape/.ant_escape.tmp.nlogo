@@ -237,11 +237,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-<<<<<<< HEAD
-0.6
-=======
 3.1
->>>>>>> origin/master
 0.1
 1
 NIL
@@ -426,24 +422,6 @@ kill-ant-after-exit
 1
 -1000
 
-<<<<<<< HEAD
-SLIDER
-225
-780
-745
-813
-pheromone-transfer
-pheromone-transfer
-0
-100
-70.0
-1
-1
-%
-HORIZONTAL
-
-=======
->>>>>>> origin/master
 @#$#@#$#@
 ## WHAT IS IT?
 

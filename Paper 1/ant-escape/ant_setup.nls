@@ -18,12 +18,16 @@ to ants-go
   
   ask ants [    
     set myid who
-    move-ants        
-    ;set shape "ant"
-    ;set size 3     
+    move-ants
+        
+    set shape "ant"
+    set size 3 
+    set is-following-pheromone? false
+    set is-stressed? false
     release-pheromone
   ]
   
+  diffuse pheromone (diffuse-rate / 100)  
   dissipate-pheromone
 end
 
@@ -36,59 +40,107 @@ to breed-ants
     set color red 
     set is-stressed? false    
     set has-found-exit? false
-    set is-following-pheromone? false
   ]  
 end
 
 ;Set ants moving around
 to move-ants 
   
-  detect-scent myid
-    
+  detect-scent  
+  
   ;Will handle other movements from within their own actions, ie moving from repellent, moving to pheromone.
   if not is-stressed?[
-    wiggle
-    ;fd 0.5
+    wander
   ]
   
   avoid-wall
-  
 end
 
-
+;If any wall patches are within range, step back turn away and move on.
+to avoid-wall
+  while [ 
+    any? patches in-radius 2 with[
+      pcolor = [0 0 0]
+     ] 
+  ]
+  [
+     bk 0.5
+     rt (random 180) - 90
+     fd 0.5
+  ]  
+end
 
 ;Detect any scent. Repellent or pheromone
-to detect-scent [id-of-ant]
+to detect-scent
+  let pher-ahead pher-scent-at-angle   0
+  let pher-right pher-scent-at-angle  45
+  let pher-left  pher-scent-at-angle -45
   
+<<<<<<< HEAD
   let pher-targets patches in-cone 1 75   
   let rep-target patch-ahead 1
-  
-  if patch-ahead  1 != nobody[
-    set rep-target [repellent] of patch-ahead  1
-  ]
-  
-  let pher-target 0
-  ;let rep-target 0
-  
-  if any? pher-targets [ 
-    set pher-target max-one-of pher-targets [pheromone] 
-    set is-following-pheromone? true    
-  ] 
+=======
+  let rep-ahead rep-scent-at-angle   0
+  let rep-right rep-scent-at-angle  45
+  let rep-left  rep-scent-at-angle -45
     
-  ;if any? rep-targets [ 
-  ;  set rep-target min-one-of rep-targets [repellent]
-  ;] 
+  let max-rep rep-ahead
+  let max-pher pher-ahead
+>>>>>>> origin/master
   
-  if pher-target != nobody and pher-target != 0  [
-    if ([pheromone] of pher-target  > 0) [
-    face pher-target 
-      avoid-wall
-    fd 0.5 
-      
-    wiggle
+  ;Find the strongest scents
+  if (rep-right > max-rep)[
+    set max-rep rep-right    
   ]
+  if (rep-left > max-rep)[
+    set max-rep rep-left
   ]
   
+  if (pher-right > max-pher)[
+    set max-pher pher-right    
+  ]
+  if (pher-left > max-pher)[
+    set max-pher pher-left
+  ]
+  
+  ;Decide which movement method to choose, if pheromone val is stronger, follow that etc.
+  if(max-pher > 0) or (max-rep > 0)[
+    
+    ifelse max-pher > max-rep [
+      move-to-pheromone
+    ]
+    [
+      move-from-repellent
+    ]
+  ]
+end
+
+;Movement for following a pheromone trail
+to move-to-pheromone
+  let scent-ahead pher-scent-at-angle   0
+  let scent-right pher-scent-at-angle  45
+  let scent-left  pher-scent-at-angle -45
+  
+  ;Determine the strongest scent and move to it
+  ifelse (scent-right > scent-ahead) or (scent-left > scent-ahead) [
+    ifelse scent-right > scent-left [      
+      rt 45      
+      fd 0.5
+    ]
+    [     
+      lt 45 
+      fd 0.5
+    ]
+  ]
+  [
+    wander
+  ]
+end
+
+;Movement for avoiding repellent
+to move-from-repellent
+  
+<<<<<<< HEAD
   if rep-target != nobody [
     ifelse rep-target > repellent[
       avoid-wall
@@ -104,7 +156,53 @@ to detect-scent [id-of-ant]
       avoid-wall
         wiggle
       ]
+=======
+  let scent-ahead rep-scent-at-angle   0
+  let scent-right rep-scent-at-angle  45
+  let scent-left  rep-scent-at-angle -45
+  
+  ;Determine the strongest scent and move to it. Have swapped left and right here because we want to do the opposite
+  ifelse (scent-right > scent-ahead) or (scent-left > scent-ahead) [
+    ifelse scent-right > scent-left [      
+      lt 45      
+      fd 0.5
+    ]
+    [     
+      rt 45 
+      fd 0.5
+    ]
   ]
+  [
+    wander
+  ]
+end
+
+;Report back pheromone at the specified angle
+to-report pher-scent-at-angle [ angle ]
+  let p patch-right-and-ahead angle 1
+  
+  if p = nobody [ 
+    report 0 
+  ]
+  ;user-message (p)
+  ifelse antID != who and [ pheromone ] of p > 0 [
+    
+    report [ pheromone ] of p
+  ]
+  [
+    report 0 
+>>>>>>> origin/master
+  ]
+end
+
+;Report back repellent at the specified angle
+to-report rep-scent-at-angle [ angle ]
+  let p patch-right-and-ahead angle 1
+  
+  if p = nobody [ 
+    report 0 
+  ]    
+    report [ repellent ] of p  
 end
 
 ;Releasese pheromone and sets stressed flag if the ant finds a patch with repellent. Will continue to release if stressed.
@@ -115,45 +213,35 @@ to release-pheromone
         set is-stressed? true
       ]
     ]
-  ]   
+  ]
+   
   
   if is-stressed? [
     let current-ant myid 
     drop-pheromone -180 2 who 1
+    ;drop-pheromone -210 2 who 1.1
+    ;drop-pheromone -240 2 who 1.2
+    ;drop-pheromone -270 2 who 1.3
+    ;drop-pheromone -150 2 who 1.4
+    ;drop-pheromone -120 2 who 1.5
+    ;drop-pheromone -90 2  who 1.6
   ]
 end
 
 ;Attempt at a way of specific where the pheromone is to be dropped, and also giving a patch a turtle id. So they dont follow their own trail
 to drop-pheromone [angle dist ant-id intensity]
-  ask patch-here [
-    set pheromone 255
+  ask neighbors [
+  ;ask patch-at-heading-and-distance angle dist [
+     ifelse (pheromone + (80 / intensity) > 255) [
+        set pheromone 255
+          set antID ant-id
+      ]
+      [   
+        set pheromone pheromone + (80 / intensity)
+        set antID ant-id
+      ]
   ]
 end
-
-; Spread the repellent out into all four cardinal directions.
-to spread-pheromone
-  ask patches [
-    if old-pheromone > 0 [
-      distribute-pheromone old-pheromone
-    ]
-  ]
-end
-
-to distribute-pheromone [source-pheromone]
-  let spaces 0
-  
-  ask neighbors4 [
-    if (not is-wall?) and (pheromone <= source-pheromone) [
-      set pheromone pheromone + round (source-pheromone * ((pheromone-transfer / 4) / 100))
-      if pheromone > 255 [ set pheromone 255 ]
-      set spaces spaces + 1
-    ]
-  ]
-  
-  set pheromone pheromone - round (source-pheromone * (((pheromone-transfer / 4) * spaces) / 100))
-  if pheromone < 0 [ set pheromone 0 ]
-end
-
 
 ;Check whether patch has repellent and move away from the repellents least
 to check-for-repellent
@@ -161,11 +249,62 @@ to check-for-repellent
     if [repellent] of p < repellent [
       face p
       ;move-to p
-      ;fd 0.5
+      fd 0.5
       set is-stressed? true
     ]
 end
 
+;**IGNORE FOR NOW**
+;Ants will check up, left, right for scent of pheromone. Once found it will turn to the direction of the strongest scent.
+to check-for-trail   
+  let scent-ahead pheromone-scent-at-angle   0
+  let scent-right pheromone-scent-at-angle  45
+  let scent-left  pheromone-scent-at-angle -45
+  
+  if (scent-right > scent-ahead) or (scent-left > scent-ahead) [
+    ifelse scent-right > scent-left [
+      
+      rt 45
+      ;if can-move? 1 [ move-to patch-right-and-ahead 45 1 ]
+      set is-following-pheromone? true
+      ;user-message (word "Rahead: " scent-ahead " right: " scent-right " left: " scent-left)
+      let p max-one-of neighbors [pheromone]
+    if [pheromone] of p > pheromone and antID != who [
+      face p
+      ;move-to p
+      fd 0.5
+       rt random 40 - random 40  
+    ]
+    ]
+    [     
+      lt 45 
+      set is-following-pheromone? true
+      let p max-one-of neighbors [pheromone]
+    if [pheromone] of p > pheromone and antID != who [
+      face p
+      ;move-to p
+      fd 0.5
+    ]
+    ]
+  ]
+end
+
+;Returns the patch at an angle 1, 45 or -45 and gives pheromone value of that patch.
+to-report pheromone-scent-at-angle [ angle ]
+  let p patch-right-and-ahead angle 1
+  
+  if p = nobody [ 
+    report 0 
+  ]
+  ;user-message (p)
+  ifelse antID != who [
+    
+    report [ pheromone ] of p
+  ]
+  [
+    report 0 
+  ]
+end
 
 ;generic walking function
 to wander
@@ -182,6 +321,7 @@ to dissipate-pheromone
     if pheromone < 0.05 [ set pheromone 0 ]
   ]
 end
+<<<<<<< HEAD
 
 ;If any wall patches are within range, step back turn away and move on.
 to avoid-wall
@@ -196,3 +336,5 @@ to avoid-wall
      fd 0.5
   ]  
 end
+=======
+>>>>>>> origin/master
