@@ -28,6 +28,7 @@ to go
   ants-go
   capture-old-values
   spread-repellent
+  spread-pheromone
   ;decay-repellent
 
   update-patches
@@ -160,7 +161,7 @@ exit-width
 exit-width
 1
 10
-6.0
+10.0
 1
 1
 NIL
@@ -237,11 +238,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-<<<<<<< HEAD
 0.6
-=======
-3.1
->>>>>>> origin/master
 0.1
 1
 NIL
@@ -288,7 +285,7 @@ repellent-pad-x
 repellent-pad-x
 0
 100
-60.0
+100.0
 1
 1
 %
@@ -376,7 +373,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    set frequency (ants-found-exit / (ticks - tick-on-first-find)) \n    plotxy ticks frequency\n   ]\n  ] \n]"
+"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks (ants-found-exit / (ticks - tick-on-first-find))\n   ]\n  ] \n]"
 
 SWITCH
 10
@@ -426,7 +423,6 @@ kill-ant-after-exit
 1
 -1000
 
-<<<<<<< HEAD
 SLIDER
 225
 780
@@ -442,8 +438,6 @@ pheromone-transfer
 %
 HORIZONTAL
 
-=======
->>>>>>> origin/master
 @#$#@#$#@
 ## WHAT IS IT?
 
@@ -813,56 +807,6 @@ NetLogo 6.0.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
-<experiments>
-  <experiment name="6w-run" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup
-drop-repellent-pad</setup>
-    <go>go</go>
-    <exitCondition>stop-next-run?</exitCondition>
-    <metric>ticks</metric>
-    <metric>ants-found-exit</metric>
-    <metric>frequency</metric>
-    <enumeratedValueSet variable="diffuse-rate">
-      <value value="7.6"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="repellent-intensity">
-      <value value="255"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="time-to-stop">
-      <value value="360"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="repellent-transfer">
-      <value value="10"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="kill-ant-after-exit">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="pheromone-decay-rate">
-      <value value="3.1"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="exit-width">
-      <value value="6"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="box-width">
-      <value value="56"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="ant-population">
-      <value value="36"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="box-height">
-      <value value="56"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="repellent-pad-x">
-      <value value="60"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="stop-1minute-last-exit">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="repellent-pad-y">
-      <value value="40"/>
-    </enumeratedValueSet>
-  </experiment>
-</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
