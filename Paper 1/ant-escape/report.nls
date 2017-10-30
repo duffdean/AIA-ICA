@@ -1,11 +1,22 @@
 globals 
 [ 
   tick-on-first-find
+  tick-on-final-find
   tick-on-last-find
   ants-found-exit
   old-ants-found-exit
 ]
 
+to experiment-checks
+  if stop-1minute-last-exit = true
+  [
+    ;if an ant has found the exit, and if there has been a long time between the last exit, stop
+    if tick-on-first-find > 0 and (time-to-stop < (ticks - tick-on-last-find))
+    [
+      set stop-next-run? true
+    ]
+  ]
+end
 
 to exit-found
   ;this helps the charts detect when they should plot a change
@@ -26,15 +37,24 @@ to exit-found
             set tick-on-first-find ticks
           ]
           set ants-found-exit ants-found-exit + 1
+          
           set has-found-exit? true
+          
+          set tick-on-last-find ticks
           
           ;all ants have found the exit
           if ants-found-exit = ant-population [
-            set tick-on-last-find ticks
+            set tick-on-final-find ticks
             
             ;we don't have anything else to report on so we'll stop the model
-            stop
+            set stop-next-run? true
           ]
+          
+          if kill-ant-after-exit
+          [
+            die
+          ]
+          
         ]
       ]      
     ]

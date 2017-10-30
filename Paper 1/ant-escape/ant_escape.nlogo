@@ -6,7 +6,9 @@ __includes [
   "report.nls"
   "utils.nls"]
 
-globals [ mouse-up? ]
+globals [
+  mouse-up?
+  stop-next-run?]
 
 
 ; Initialise the model!
@@ -15,6 +17,7 @@ to setup
   reset-ticks
 
   set mouse-up? true
+  set stop-next-run? false
 
   render-box
   setup-ants
@@ -29,8 +32,17 @@ to go
 
   update-patches
 
-  exit-found ;DanB
+  ;experiment code
+  experiment-checks
+  exit-found
+
   mouse-click?
+
+  if stop-next-run?
+  [
+    stop
+  ]
+
   tick
 end
 
@@ -210,7 +222,7 @@ ant-population
 ant-population
 0
 500
-7.0
+36.0
 1
 1
 NIL
@@ -338,8 +350,8 @@ MONITOR
 25
 860
 70
-tick on last exit
-tick-on-last-find
+tick on final exit
+tick-on-final-find
 17
 1
 11
@@ -360,7 +372,55 @@ true
 false
 "" ""
 PENS
-"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks ((ants-found-exit / ticks) * 10)\n   ]\n  ] \n]"
+"default" 1.0 1 -16777216 true "" ";only start upon first exit\nif tick-on-first-find > 0 \n[\n ;simple div by 0 error prevent\n if ticks > 0 \n  [ \n   ;stops spam of a load of data points\n   if old-ants-found-exit < ants-found-exit\n   [\n    ;times by 100 to make it easier to see on graph\n    plotxy ticks (ants-found-exit / (ticks - tick-on-first-find))\n   ]\n  ] \n]"
+
+SWITCH
+10
+175
+140
+208
+stop-1minute-last-exit
+stop-1minute-last-exit
+0
+1
+-1000
+
+SLIDER
+10
+215
+140
+248
+time-to-stop
+time-to-stop
+0
+1000
+360.0
+1
+1
+NIL
+HORIZONTAL
+
+MONITOR
+870
+25
+975
+70
+tick on last exit
+tick-on-last-find
+17
+1
+11
+
+SWITCH
+10
+255
+140
+288
+kill-ant-after-exit
+kill-ant-after-exit
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
