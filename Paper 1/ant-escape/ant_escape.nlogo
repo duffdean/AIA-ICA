@@ -28,6 +28,7 @@ to go
   ants-go
   capture-old-values
   spread-repellent
+  spread-pheromone
   ;decay-repellent
 
   update-patches
@@ -237,7 +238,7 @@ pheromone-decay-rate
 pheromone-decay-rate
 0
 100
-3.1
+1.3
 0.1
 1
 NIL
@@ -284,7 +285,7 @@ repellent-pad-x
 repellent-pad-x
 0
 100
-60.0
+100.0
 1
 1
 %
@@ -421,6 +422,21 @@ kill-ant-after-exit
 0
 1
 -1000
+
+SLIDER
+225
+780
+745
+813
+pheromone-transfer
+pheromone-transfer
+0
+100
+10.0
+1
+1
+%
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
