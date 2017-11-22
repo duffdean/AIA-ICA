@@ -26,6 +26,20 @@ However, after a point, and with some extreme user settings, it does remain poss
 * Difficulties faced
 
 ## 2.2. Room/Map setup
+Of the original experiment it was known that the container from which the ants were to escape was horizontally wide enough for a reasonable number of ants to navigate without immediately crushing or locking one another in, though vertical space was restricted such that there would be no room for an ant to attempt vaulting another ant or any obstacle it may encounter. As a result, determining the necessary abstractions for the container proved to be a simple enough affair, as the model could ultimately be represented by a two-dimensional map.
+
+This map employed the use of NetLogo's patches in order to render walls that could not be passed through at all, displaying the necessary walls as black patches that not only dictated an impassable obstacle for the ants within the container but also served to restrict flow of repellent and pheromones with logic that ignored these tiles when calculating the spread of a neighbouring patch's contents. The fully initialised map consisted of an entirely blue surface playing host to a hollow black rectangle of variable width and height, serving to represent the boundaries of the container. To serve as an exist, a central section of the container's northern wall was "cut out" to leave a gap of the same blue colour as the rest of the surface.
+
+The location of the walls is determined thus: the model's user sets the required width and height of the container, the values being their length in patches, as well as the width of the exit, and initialises the model. The model renders the surface and walls to these given parameters, while also keeping the container fixed squarely in the centre of the map. The exit is then "carved out" out the northern wall, again ensuring that it remains within the wall's centre.
+
+The agents representing the ants are spawned in the exact centre of the box, though this is not entirely ideal as this runs counter to the knowledge that no ant can sit atop one another, due to the restricted verticality of the containter. Ideally, a more logical approach would have been to spawn the ant agents at randomised positions, adjusting or generating those positions again in the event of an overlap.
+
+Repellent is not immediately deployed at the start of the simulation, as the user may wish to allow time for the ants to spread out due to the aforementioned spawning of ants in the centre. Again, the parameters of the repellent's virtual filter paper can be adjusted by height and width, though the values selected represent percentages of the container's width and height. In addition, the position of the repellent's drop zone is anchored to the southern end, with no options for vertically relocating it. This make sense due to the position of the exit at the north, though it is possible to drop a slip of paper that spans the entire width and height of the container.
+
+Walls serve two purposes: To contain the ants to a specific area until they find the exit, and to restrict the expansion of both the repellent and pheromones. By design, nothing should be allowed to pass through a wall under any circumstances. However, the walls can serve to guide the flow of repellent and pheromones as well as provide an obstacle to detect and eventually feel its way around, eventually finding the exit by following it.
+
+Open space can be passed through by ants and the two gases, though as previously stated, ants cannot overlap one another. Repellent and pheromones are represented in the model as numerical values showing their concentration visually by passing their values into the red and green channels of the patch's colour value respectively, causing the patch colour itself to visibly change colour as either gas fills it.
+
 * Means of abstraction
 * Representation of environment
 * Placement of walls
