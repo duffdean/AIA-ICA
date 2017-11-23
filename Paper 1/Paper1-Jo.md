@@ -38,7 +38,11 @@ Repellent is not immediately deployed at the start of the simulation, as the use
 
 Walls serve two purposes: To contain the ants to a specific area until they find the exit, and to restrict the expansion of both the repellent and pheromones. By design, nothing should be allowed to pass through a wall under any circumstances. However, the walls can serve to guide the flow of repellent and pheromones as well as provide an obstacle to detect and eventually feel its way around, eventually finding the exit by following it.
 
-Open space can be passed through by ants and the two gases, though as previously stated, ants cannot overlap one another. Repellent and pheromones are represented in the model as numerical values showing their concentration visually by passing their values into the red and green channels of the patch's colour value respectively, causing the patch colour itself to visibly change colour as either gas fills it.
+Open space can be passed through by ants and the two gases, though as previously stated, ants cannot overlap one another. Repellent and pheromones, however, can occupy the same patch as any ant present there as well as each other. They are represented in the model as numerical values, showing their concentration visually by passing their values into the red and green channels of the patch's colour value respectively and causing the patch colour itself to visibly change colour as either gas fills it.
+
+The model provides a user with the means to adjust the size of the container, as well as the width of the exit, by way of a series of sliders placed around the model in an arrangement that closely matches their affected components, such as the container height slider running vertically along the side of the model while the width sliders run along the horizonatal edges. In addition, the  user can also adjust the amount of ants to spawn within the container, though this is presented as a direct text entry box rather than a slider.
+
+Some issues arose in the model, however, in the form of abnormal and unintended ant behaviour, owing to the nature of ant movement around the world - it being by pixel rather than perhaps by patch - and difficulties encountered in attempting to implement logic to collide with and respond to walls. These issues ultimately led to cases in which ants would become trapped in an almost never-ending spiral.
 
 * Means of abstraction
 * Representation of environment
