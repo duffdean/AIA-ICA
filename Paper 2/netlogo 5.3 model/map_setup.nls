@@ -1,11 +1,22 @@
 ;need to set the max-pxcor and max-pycor to 3
 ;need to have the location of origin start from corner
 
-patches-own [ vehicleNumber ]
-
+patches-own [ 
+  vehicleNumber
+  isvehiclefront
+  axies
+  axies-value
+]
 
 to render-map
-  ask patches [ set pcolor grey ]
+  ;reset all patches
+  ask patches [ 
+    set pcolor grey 
+    set vehicleNumber 0
+    set isvehiclefront false
+    set axies "null"
+    set axies-value 0
+  ]
   
   ; helps show were the 'exit' is. the exit however is classed as patch [3 2] not [4 2]
   ask patch 4 1 [set pcolor black]
@@ -14,23 +25,36 @@ to render-map
   ask patch 4 4 [set pcolor black]
   
   ;players car
+  ;don't set players vehicleNumber to 0, ever other patch defaults to that
   ask patch 1 2 [
     set pcolor red
-    set vehicleNumber 0
+    set vehicleNumber 1
+    set isvehiclefront true
+    set axies "x"
+    set axies-value 2
   ]
   ask patch 0 2 [
     set pcolor red
-    set vehicleNumber 0
+    set vehicleNumber 1
+    set isvehiclefront false
+    set axies "x"
+    set axies-value 2
   ]
   
   ;other cars
   ask patch 2 2 [
     set pcolor green
-    set vehicleNumber 1
+    set vehicleNumber 2
+    set isvehiclefront true
+    set axies "y"
+    set axies-value 2
   ]
   ask patch 2 3 [
     set pcolor green
-    set vehicleNumber 1
+    set vehicleNumber 2
+    set isvehiclefront false
+    set axies "y"
+    set axies-value 2
   ]
   
 end

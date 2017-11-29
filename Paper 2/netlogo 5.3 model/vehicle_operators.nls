@@ -1,13 +1,124 @@
 
 
 
-to move-x [carNum frontDestination-x]
-  ask patches [ set pcolor grey ]
+to move-x [vehicleNum frontDestination-x]
+  ask patches [ 
+    if (vehicleNumber = vehicleNum)[
+      let veh-colour gray
+      let y-axies-value 0
+      
+      set veh-colour pcolor
+      set y-axies-value axies-value
+      
+      if (isvehiclefront)
+      [
+        ;removeing old front
+        set pcolor grey 
+        set vehicleNumber 0
+        set isvehiclefront false
+        set axies "null"
+        set axies-value 0
+        
+        ;reset destination patch (only needed if colliding into another car)
+        ;so really once rules are added this shouldn't be needed
+        ask patch frontDestination-x y-axies-value [
+          set pcolor grey 
+          set vehicleNumber 0
+          set isvehiclefront false
+          set axies "null"
+          set axies-value 0
+        ]
+        
+        ;tell the destination patch its new values
+        ask patch frontDestination-x y-axies-value [
+          set pcolor veh-colour
+          set vehicleNumber vehicleNum
+          set isvehiclefront true
+          set axies "x"
+          set axies-value y-axies-value
+        ]
+      ]
+      
+      ;make sure to remove the values from the old patches
+      if (not isvehiclefront)[
+        set pcolor grey 
+        set vehicleNumber 0
+        set isvehiclefront false
+        set axies "null"
+        set axies-value 0
+      ]
+      
+      ;set the new rear section of the vehicle
+      ask patch (frontDestination-x - 1) y-axies-value [
+          set pcolor veh-colour
+          set vehicleNumber vehicleNum
+          set isvehiclefront false
+          set axies "x"
+          set axies-value y-axies-value
+      ]
+      
+    ] 
+  ]
 end
 
-
-to move-y
-  
+to move-y [vehicleNum frontDestination-y]
+  ask patches [ 
+    if (vehicleNumber = vehicleNum)[
+      let veh-colour gray
+      let x-axies-value 0
+      
+      set veh-colour pcolor
+      set x-axies-value axies-value
+      
+      if (isvehiclefront)
+      [
+        ;removeing old front
+        set pcolor grey 
+        set vehicleNumber 0
+        set isvehiclefront false
+        set axies "null"
+        set axies-value 0
+        
+        ;reset destination patch (only needed if colliding into another car)
+        ;so really once rules are added this shouldn't be needed
+        ask patch x-axies-value frontDestination-y[
+          set pcolor grey 
+          set vehicleNumber 0
+          set isvehiclefront false
+          set axies "null"
+          set axies-value 0
+        ]
+        
+        ;tell the destination patch its new values
+        ask patch x-axies-value frontDestination-y [
+          set pcolor veh-colour
+          set vehicleNumber vehicleNum
+          set isvehiclefront true
+          set axies "y"
+          set axies-value x-axies-value
+        ]
+      ]
+      
+      ;make sure to remove the values from the old patches
+      if (not isvehiclefront)[
+        set pcolor grey 
+        set vehicleNumber 0
+        set isvehiclefront false
+        set axies "null"
+        set axies-value 0
+      ]
+      
+      ;set the new rear section of the vehicle
+      ask patch x-axies-value (frontDestination-y + 1) [
+          set pcolor veh-colour
+          set vehicleNumber vehicleNum
+          set isvehiclefront false
+          set axies "y"
+          set axies-value x-axies-value
+      ]
+      
+    ] 
+  ]
 end
 
 
