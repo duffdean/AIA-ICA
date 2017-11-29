@@ -4,7 +4,7 @@
 //the player car
 (isa 0 car) 
 (colour 0 red)
-(y 0 (2))
+(y 0 (3))
 (x 0 (1 0))
 
 //other cars
