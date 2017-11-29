@@ -1,0 +1,15 @@
+(map (0 0) (3 3))
+(exit (3 2))
+
+//the player car
+(isa 0 car) 
+(colour 0 red)
+(y 0 (3))
+(x 0 (1 0))
+
+//other cars
+(isa 1 car) 
+(colour 1 green)
+(x 1 (2))
+(y 1 (2 3))
+
