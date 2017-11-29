@@ -1,0 +1,16 @@
+
+
+
+to move-x [carNum frontDestination-x]
+  ask patches [ set pcolor grey ]
+end
+
+
+to move-y
+  
+end
+
+
+to exit
+  
+end
