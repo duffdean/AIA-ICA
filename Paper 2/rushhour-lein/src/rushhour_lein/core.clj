@@ -1,6 +1,8 @@
 (ns rushhour-lein.core
   (:gen-class)
-  (:require [rushhour-lein.socket :refer :all])
+  (:require [rushhour-lein.socket :refer :all]
+            [data.world :refer :all]
+            )
   )
 
 (defn -main
