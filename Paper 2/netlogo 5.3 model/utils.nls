@@ -1,0 +1,9 @@
+to nuke-patch
+  set pcolor grey 
+  set vehicleNumber 0
+  set isvehiclefront false
+  set axies "null"
+  set axies-value 0
+  set isWall false
+  ;set isExit false
+end

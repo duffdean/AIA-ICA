@@ -1,18 +1,53 @@
 __includes [
   "map_setup.nls"
-  "vehicle_operators.nls"]
+  "vehicle_operators.nls"
+  "utils.nls"]
+
+globals [
+  mouse-up?]
 
 to setup
+  clear-all
   reset-ticks
 
-  render-map
+  ifelse(map-number = 1)[
+    render-map1
+  ]
+  [
+    ifelse(map-number = 2)[
+      render-map2
+    ]
+    [
+      show "seleted map does not exist"
+    ]
+  ]
+end
+
+to mouse-select
+  set mouse-up? true
+  mouse-click?
+  tick
+end
+
+;re-used ant_escape mouse click code to help users select vehicle to move easier
+to mouse-click?
+  ask patches [
+    ifelse mouse-up? [
+      if mouse-down? [
+        set mouse-up? false
+        ask patch (round mouse-xcor) (round mouse-ycor)
+        [ set selected-vehicle vehicleNumber ]
+      ]
+    ]
+    [ if not mouse-down? [ set mouse-up? true ] ]
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-104
+275
 10
-614
-441
+1185
+741
 -1
 -1
 100.0
@@ -22,13 +57,13 @@ GRAPHICS-WINDOW
 1
 1
 0
-1
-1
+0
+0
 1
 0
-4
+8
 0
-3
+6
 0
 0
 1
@@ -43,6 +78,130 @@ BUTTON
 setup
 setup
 NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+INPUTBOX
+12
+80
+88
+140
+map-number
+1
+1
+0
+Number
+
+INPUTBOX
+12
+159
+110
+219
+selected-vehicle
+1
+1
+0
+Number
+
+BUTTON
+87
+249
+150
+282
+up
+let coord 0\nask patches [ \n  if (vehicleNumber = selected-vehicle)[\n    if (isvehiclefront)\n    [\n      set coord (pycor + 1)\n    ]\n  ]\n]\nmove-y selected-vehicle coord
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+87
+313
+150
+346
+down
+let coord 0\nask patches [ \n  if (vehicleNumber = selected-vehicle)[\n    if (isvehiclefront)\n    [\n      set coord (pycor - 1)\n    ]\n  ]\n]\nmove-y selected-vehicle coord
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+148
+281
+211
+314
+right
+let coord 0\nask patches [ \n  if (vehicleNumber = selected-vehicle)[\n    if (isvehiclefront)\n    [\n      set coord (pxcor + 1)\n    ]\n  ]\n]\nmove-x selected-vehicle coord
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+24
+281
+87
+314
+left
+let coord 0\nask patches [ \n  if (vehicleNumber = selected-vehicle)[\n    if (isvehiclefront)\n    [\n      set coord (pxcor - 1)\n    ]\n  ]\n]\nmove-x selected-vehicle coord
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+86
+386
+149
+419
+exit
+exit
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+129
+174
+249
+207
+allow click select
+mouse-select
+T
 1
 T
 OBSERVER

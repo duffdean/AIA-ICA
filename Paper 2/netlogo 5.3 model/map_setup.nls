@@ -1,3 +1,4 @@
+__includes ["utils.nls"]
 ;need to set the max-pxcor and max-pycor to 3
 ;need to have the location of origin start from corner
 
@@ -6,55 +7,107 @@ patches-own [
   isvehiclefront
   axies
   axies-value
+  isWall
+  isExit
 ]
-
-to render-map
-  ;reset all patches
+to reset-all-patches
   ask patches [ 
-    set pcolor grey 
-    set vehicleNumber 0
-    set isvehiclefront false
-    set axies "null"
-    set axies-value 0
+    nuke-patch
   ]
+end
+
+to render-walls
   
-  ; helps show were the 'exit' is. the exit however is classed as patch [3 2] not [4 2]
-  ask patch 4 1 [set pcolor black]
-  ask patch 4 2 [set pcolor yellow]
-  ask patch 4 3 [set pcolor black]
-  ask patch 4 4 [set pcolor black]
+  ;right wall with exit
+  ask patch 8 0 [set pcolor black set isWall true]
+  ask patch 8 1 [set pcolor black set isWall true]
+  ask patch 8 2 [set pcolor black set isWall true]
+  ask patch 8 3 [
+    set pcolor yellow 
+    ;set isWall true 
+    set isExit true]
+  ask patch 8 4 [set pcolor black set isWall true]
+  ask patch 8 5 [set pcolor black set isWall true]
+  ask patch 8 6 [set pcolor black set isWall true]
+  
+  ;left wall
+  ask patch 0 0 [set pcolor black set isWall true]
+  ask patch 0 1 [set pcolor black set isWall true]
+  ask patch 0 2 [set pcolor black set isWall true]
+  ask patch 0 3 [set pcolor black set isWall true]
+  ask patch 0 4 [set pcolor black set isWall true]
+  ask patch 0 5 [set pcolor black set isWall true]
+  ask patch 0 6 [set pcolor black set isWall true]
+  
+  ;bottom wall
+  ask patch 0 0 [set pcolor black set isWall true]
+  ask patch 1 0 [set pcolor black set isWall true]
+  ask patch 2 0 [set pcolor black set isWall true]
+  ask patch 3 0 [set pcolor black set isWall true]
+  ask patch 4 0 [set pcolor black set isWall true]
+  ask patch 5 0 [set pcolor black set isWall true]
+  ask patch 6 0 [set pcolor black set isWall true]
+  ask patch 7 0 [set pcolor black set isWall true]
+  
+  ;top wall
+  ask patch 0 6 [set pcolor black set isWall true]
+  ask patch 1 6 [set pcolor black set isWall true]
+  ask patch 2 6 [set pcolor black set isWall true]
+  ask patch 3 6 [set pcolor black set isWall true]
+  ask patch 4 6 [set pcolor black set isWall true]
+  ask patch 5 6 [set pcolor black set isWall true]
+  ask patch 6 6 [set pcolor black set isWall true]
+  ask patch 7 6 [set pcolor black set isWall true]
+  
+end
+
+to render-map1
+  ;reset all patches
+  
+  reset-all-patches
+  render-walls
+  
+  ;add cars
   
   ;players car
   ;don't set players vehicleNumber to 0, ever other patch defaults to that
-  ask patch 1 2 [
+  ask patch 2 3 [
     set pcolor red
     set vehicleNumber 1
     set isvehiclefront true
     set axies "x"
-    set axies-value 2
+    set axies-value 3
   ]
-  ask patch 0 2 [
+  ask patch 1 3 [
     set pcolor red
     set vehicleNumber 1
     set isvehiclefront false
     set axies "x"
-    set axies-value 2
+    set axies-value 3
   ]
   
   ;other cars
-  ask patch 2 2 [
+  ask patch 3 3 [
     set pcolor green
     set vehicleNumber 2
     set isvehiclefront true
     set axies "y"
-    set axies-value 2
+    set axies-value 3
   ]
-  ask patch 2 3 [
+  ask patch 3 4 [
     set pcolor green
     set vehicleNumber 2
     set isvehiclefront false
     set axies "y"
-    set axies-value 2
+    set axies-value 3
   ]
   
+end
+
+to render-map2
+  
+  reset-all-patches
+  render-walls
+  
+  show "nah"
 end
