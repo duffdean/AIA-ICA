@@ -21,36 +21,39 @@ to move-x [vehicleNum frontDestination-x]
     ]
   ]
   
-  ;check if front destionation is blank (not wall/vehnum > 0)
-  ask patch frontDestination-x y-axies-value [
-    if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
-      set islegal false
-      set message "ilegal move: vehicle at front location"
-    ]
-    if(isWall)[
-      set islegal false
-      set message "ilegal move: wall at front location"
-    ]
-  ] 
-  ;check if read destionation is blank (not wall/vehnum > 0)
-  ask patch (frontDestination-x - 1) y-axies-value [
-    if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
-      set islegal false
-      set message "ilegal move: vehicle at rear location"
-    ]
-    if(isWall)[
-      set islegal false
-      set message "ilegal move: wall at rear location"
-    ]
-  ]
-  ;check if no car's in the way of move
-  ;todo
   
   ;check if the car is on the correct axies
-  if(type-axies = "y")[
+  ifelse(type-axies = "y")[
     set islegal false
     set message "ilegal move: wrong axies"
   ]
+  [
+    ;check if front destionation is blank (not wall/vehnum > 0)
+    ask patch frontDestination-x y-axies-value [
+      if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
+        set islegal false
+        set message "ilegal move: vehicle at front location"
+      ]
+      if(isWall)[
+        set islegal false
+        set message "ilegal move: wall at front location"
+      ]
+    ] 
+    ;check if read destionation is blank (not wall/vehnum > 0)
+    ask patch (frontDestination-x - 1) y-axies-value [
+      if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
+        set islegal false
+        set message "ilegal move: vehicle at rear location"
+      ]
+      if(isWall)[
+        set islegal false
+        set message "ilegal move: wall at rear location"
+      ]
+    ]
+    ;check if no car's in the way of move
+    ;todo
+  ]
+  
   
   
   ifelse(islegal)[
@@ -117,37 +120,37 @@ to move-y [vehicleNum frontDestination-y]
     ]
   ]
   
-  ;check if front destionation is blank (not wall/vehnum > 0)
-  ask patch x-axies-value frontDestination-y[
-    if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
-      set islegal false
-      set message "ilegal move: vehicle at front location"
-    ]
-    if(isWall)[
-      set islegal false
-      set message "ilegal move: wall at front location"
-    ]
-  ] 
-  ;check if read destionation is blank (not wall/vehnum > 0)
-  ask patch x-axies-value (frontDestination-y + 1) [
-    if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
-      set islegal false
-      set message "ilegal move: vehicle at rear location"
-    ]
-    if(isWall)[
-      set islegal false
-      set message "ilegal move: wall at rear location"
-    ]
-  ]
-  ;check if no car's in the way of move
-  ;todo
-  
   ;check if the car is on the correct axies
-  if(type-axies = "x")[
+  ifelse(type-axies = "x")[
     set islegal false
     set message "ilegal move: wrong axies"
   ]
-  
+  [
+    ;check if front destionation is blank (not wall/vehnum > 0)
+    ask patch x-axies-value frontDestination-y[
+      if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
+        set islegal false
+        set message "ilegal move: vehicle at front location"
+      ]
+      if(isWall)[
+        set islegal false
+        set message "ilegal move: wall at front location"
+      ]
+    ] 
+    ;check if read destionation is blank (not wall/vehnum > 0)
+    ask patch x-axies-value (frontDestination-y + 1) [
+      if(vehicleNumber > 0 AND vehicleNumber != vehicleNum)[
+        set islegal false
+        set message "ilegal move: vehicle at rear location"
+      ]
+      if(isWall)[
+        set islegal false
+        set message "ilegal move: wall at rear location"
+      ]
+    ]
+    ;check if no car's in the way of move
+    ;todo
+  ]
   
   ifelse(islegal)[
     ask patches [ 

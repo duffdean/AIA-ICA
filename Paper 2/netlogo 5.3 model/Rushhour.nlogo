@@ -93,7 +93,7 @@ INPUTBOX
 88
 140
 map-number
-1
+2
 1
 0
 Number
@@ -210,6 +210,21 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+94
+93
+266
+126
+map-number
+map-number
+1
+6
+2
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
