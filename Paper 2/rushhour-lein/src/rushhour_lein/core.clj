@@ -2,6 +2,7 @@
   (:gen-class)
   (:require [rushhour-lein.socket :refer :all]
             [data.world :refer :all]
+            [planner.ops :refer :all]
             )
   )
 
