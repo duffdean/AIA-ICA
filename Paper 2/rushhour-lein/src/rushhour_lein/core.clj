@@ -1,9 +1,12 @@
 (ns rushhour-lein.core
   (:gen-class)
-  (:require [rushhour-lein.socket :refer :all]
+  (:require [math.math :refer :all]
+            [rushhour-lein.socket :refer :all]
             [data.world :refer :all]
+            [cgsx.tools.matcher :refer :all]
+            [planner.planner :refer :all]
             [planner.ops :refer :all]
-            )
+           )
   )
 
 (defn -main

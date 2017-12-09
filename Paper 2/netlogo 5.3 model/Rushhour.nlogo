@@ -1,7 +1,8 @@
 __includes [
   "map_setup.nls"
   "vehicle_operators.nls"
-  "utils.nls"]
+  "utils.nls"
+  "sock2.nls"]
 
 globals [
   mouse-up?]
@@ -93,7 +94,7 @@ INPUTBOX
 88
 140
 map-number
-2
+1
 1
 0
 Number
@@ -220,11 +221,39 @@ map-number
 map-number
 1
 6
-2
+1
 1
 1
 NIL
 HORIZONTAL
+
+BUTTON
+11
+706
+106
+739
+Connect
+connect-to-localhost port
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+INPUTBOX
+10
+645
+105
+705
+port
+2222
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -587,5 +616,5 @@ Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 
 @#$#@#$#@
-0
+1
 @#$#@#$#@
