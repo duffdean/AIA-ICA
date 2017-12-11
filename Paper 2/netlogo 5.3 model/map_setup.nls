@@ -105,6 +105,98 @@ to render-map1
 end
 
 to render-map2
+  ;reset all patches
+  
+  reset-all-patches
+  render-walls
+  
+  ;add cars
+  
+  ;players car
+  ;don't set players vehicleNumber to 0, ever other patch defaults to that
+  ask patch 2 3 [
+    set pcolor red
+    set vehicleNumber 1
+    set isvehiclefront true
+    set axies "x"
+    set axies-value 3
+  ]
+  ask patch 1 3 [
+    set pcolor red
+    set vehicleNumber 1
+    set isvehiclefront false
+    set axies "x"
+    set axies-value 3
+  ]
+  
+  ;other cars
+  ask patch 4 3 [
+    set pcolor orange
+    set vehicleNumber 2
+    set isvehiclefront true
+    set axies "y"
+    set axies-value 4
+  ]
+  ask patch 4 4 [
+    set pcolor orange
+    set vehicleNumber 2
+    set isvehiclefront false
+    set axies "y"
+    set axies-value 4
+  ]
+  
+  ;other cars
+  ask patch 5 2 [
+    set pcolor green
+    set vehicleNumber 3
+    set isvehiclefront true
+    set axies "y"
+    set axies-value 5
+  ]
+  ask patch 5 3 [
+    set pcolor green
+    set vehicleNumber 3
+    set isvehiclefront false
+    set axies "y"
+    set axies-value 5
+  ]
+  
+  ;other cars
+  ask patch 5 1 [
+    set pcolor magenta
+    set vehicleNumber 4
+    set isvehiclefront true
+    set axies "x"
+    set axies-value 1
+  ]
+  ask patch 4 1 [
+    set pcolor magenta
+    set vehicleNumber 4
+    set isvehiclefront false
+    set axies "x"
+    set axies-value 1
+  ]
+  
+  ;other cars
+  ask patch 5 5 [
+    set pcolor yellow
+    set vehicleNumber 5
+    set isvehiclefront true
+    set axies "x"
+    set axies-value 5
+  ]
+  ask patch 4 5 [
+    set pcolor yellow
+    set vehicleNumber 5
+    set isvehiclefront false
+    set axies "x"
+    set axies-value 5
+  ]
+  
+end
+
+
+to render-map3
   
   reset-all-patches
   render-walls

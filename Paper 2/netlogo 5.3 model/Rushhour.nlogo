@@ -19,7 +19,12 @@ to setup
       render-map2
     ]
     [
-      show "seleted map does not exist"
+      ifelse(map-number = 3)[
+      render-map3
+      ]
+      [
+        show "seleted map does not exist"
+      ]
     ]
   ]
 end
@@ -220,7 +225,7 @@ SLIDER
 map-number
 map-number
 1
-6
+4
 1
 1
 1
@@ -258,39 +263,30 @@ Number
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+The Rushhour model is a model of Nobuyuki “Nob” Yoshigahara’s board game Rush Hour and is modelled in a simple way with only three procedures available that allow the modification of the games environment. The goal of the game is to get the player vehicle (red vehicle) to the exit of a busy car park, this is done by moving vehicles out of the way of the players vehicle to create an opening for the players vehicle to move through.
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+Vehicles on the vertical axis can move up and down, but not left and right.
+Vehicles on the horizontal axis can move left and right, but not up and down.
+No vehicles can move through walls or other vehicles.
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+The map can be selected via the ‘map-number’ slider, and once selected, pressing the ‘set-up’ button will load the map. From here the console can be used to call the ‘move-y’, ‘move-x’ and ‘exit’ procedures to complete the puzzle. Clicking on a vehicle and using the movement buttons can also be done, however to allow the ability to click and select a vehicle to move, the ‘allow click select’ button must be clicked.
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
+The ease of implementing and selecting maps, which can help speed up experimentation of Al algorithms against the puzzle and its different scenarios.
 
 ## THINGS TO TRY
 
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+Socket connection has been made and therefore the ability to allow an AI algorithm (A*) to connect and solve the games maps, can be done.
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+More maps can be created if desired, with relative ease.
 
-## NETLOGO FEATURES
-
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
-
-## RELATED MODELS
-
-(models in the NetLogo Models Library and elsewhere which are of related interest)
-
-## CREDITS AND REFERENCES
-
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
 @#$#@#$#@
 default
 true
