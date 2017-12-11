@@ -6,6 +6,9 @@
             [cgsx.tools.matcher :refer :all]
             [planner.planner :refer :all]
             [planner.ops :refer :all]
+            [astar.astar-search :refer :all]
+            [astar.astar :refer :all]
+            [astar.ops :refer :all]
            )
   )
 
@@ -17,4 +20,4 @@
   (def sock (open-socket 2222))
   (println "Done! Awaiting data...")
   (receive-data sock)
-  )
+)
