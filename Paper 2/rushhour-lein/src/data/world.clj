@@ -26,6 +26,7 @@
     (list 'orientation 'pv 'horiz)
     (list 'at 0 2 'pv)
     (list 'at 1 2 'pv)
+    (list 'clear-me 0 2 'pv)
     (list 'isa 'npv1 'vehicle)
     (list 'colour 'npv1 'green)
     (list 'orientation 'npv1 'vert)
