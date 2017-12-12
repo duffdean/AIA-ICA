@@ -23,27 +23,22 @@
 
 (defn lmg [state]
   (let [s (:state state)
-        w (:world state)
         c (:cost state)]
-    (astar-apply-all astar-ops s w c)
+    (astar-apply-all astar-ops s c)
     )
   )
 
-(defn astar-apply-op [op state world cost]
+(defn astar-apply-op [op state cost]
   (mfor* [(:when op) (seq state)]
-         (mfor* [(:if op) (get-locality (mout (:at op)) (mout (:range op)) world)]
-                (mlet ['?cost cost]
-                      {:state (union (set (mout (:state (:add op))))
-	                               (difference state (set (mout (:state (:del op))))))
-                       :world (union (set (mout (:world (:add op))))
-	                              (difference world (set (mout (:world (:del op))))))
-	                     :cmd   (mout (:cmd op))
-	                     :txt   (mout (:txt op))
-	                     :cost  (mout (:cost op))
-                      }
-                      )
-           )
-   )
+         (mlet ['?cost cost]
+               {:state (union (set (mout (:state (:add op))))
+                              (difference state (set (mout (:state (:del op))))))
+                :cmd   (mout (:cmd op))
+                :txt   (mout (:txt op))
+                :cost  (mout (:cost op))
+                }
+               )
+         )
   )
 
 (defn get-locality [co-ordinates range world]
@@ -53,8 +48,8 @@
                      )
                     )
 
-(defn astar-apply-all [ops state world cost]
+(defn astar-apply-all [ops state cost]
   (reduce concat
-    (map (fn [x] (astar-apply-op (x ops) state world cost))
+    (map (fn [x] (astar-apply-op (x ops) state cost))
       (keys ops)
       )))
