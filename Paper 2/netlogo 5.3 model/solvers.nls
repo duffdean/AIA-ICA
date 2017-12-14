@@ -1,0 +1,11 @@
+to run-Astar
+  ;make sure we don't run on a half complete puzzal
+  setup
+  ;map-number
+end
+
+to run-Planner
+  ;make sure we don't run on a half complete puzzal
+  setup
+  ;map-number
+end

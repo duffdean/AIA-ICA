@@ -2,7 +2,8 @@ __includes [
   "map_setup.nls"
   "vehicle_operators.nls"
   "utils.nls"
-  "sock2.nls"]
+  "sock2.nls"
+  "solvers.nls"]
 
 globals [
   mouse-up?]
@@ -23,7 +24,7 @@ to setup
       render-map3
       ]
       [
-        show "seleted map does not exist"
+        render-map4
       ]
     ]
   ]
@@ -99,7 +100,7 @@ INPUTBOX
 88
 140
 map-number
-1
+3
 1
 0
 Number
@@ -110,7 +111,7 @@ INPUTBOX
 110
 219
 selected-vehicle
-1
+2
 1
 0
 Number
@@ -226,7 +227,7 @@ map-number
 map-number
 1
 4
-1
+3
 1
 1
 NIL
@@ -260,6 +261,40 @@ port
 0
 Number
 
+BUTTON
+65
+490
+157
+523
+NIL
+run-Planner
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+65
+530
+155
+563
+NIL
+run-Astar
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 
@@ -286,7 +321,6 @@ Socket connection has been made and therefore the ability to allow an AI algorit
 ## EXTENDING THE MODEL
 
 More maps can be created if desired, with relative ease.
-
 @#$#@#$#@
 default
 true

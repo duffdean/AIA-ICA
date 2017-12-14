@@ -49,6 +49,8 @@
   (.ready (:inp socket)))
 
 
+
+
 ;user=> (def s25 (startup-server 2222))
 ;advertising  #<ServerSocket ServerSocket[addr=0.0.0.0/0.0.0.0,port=0,localport=2225]>
 ;NB: Clj thread waits until socket is accepted by some other thread
